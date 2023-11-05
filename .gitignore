@@ -1,0 +1,10 @@
+# React / Node.js
+frontend/node_modules/
+frontend/build/
+*.log
+
+# IDEs
+*.idea/
+*.vscode/
+*.eclipse/
+*.iml
