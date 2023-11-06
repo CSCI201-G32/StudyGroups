@@ -70,3 +70,60 @@ CREATE TABLE PastEnrollment (
 INSERT INTO PastEnrollment (EnrollmentID, UserID, CourseID)
 	VALUES	(1, 1, 2);
 
+/*Create a chat that is specific to certain users*/
+
+CREATE TABLE chat (
+    chat_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    title VARCHAR(255),
+    unread_messages_count INT DEFAULT 0,
+    FOREIGN KEY (user_id) REFERENCES StudentInfo(UserID)
+);
+
+/*Keep track of which user sent what message and in which
+chat they sent it in*/
+
+CREATE TABLE messages (
+    message_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    chat_id INT,
+    message VARCHAR(1000),
+    time_sent TIMESTAMP,
+    is_read BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (chat_id) REFERENCES chat(chat_id),
+    FOREIGN KEY (user_id) REFERENCES StudentInfo(UserID)
+);
+
+/*Hold files that users send*/
+
+CREATE TABLE files (
+    file_id INT AUTO_INCREMENT PRIMARY KEY,
+    file_name VARCHAR(255),
+    file_path VARCHAR(255)
+);
+
+/*Have a list of emojis that users can access*/
+
+CREATE TABLE emojis (
+    emoji_id INT AUTO_INCREMENT PRIMARY KEY,
+    emoji_text VARCHAR(10),
+    emoji_image_path VARCHAR(255)
+);
+
+CREATE TABLE contact_list (
+    contact_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT, -- User who owns the contact
+    contact_user_id INT, -- User who is a contact
+    FOREIGN KEY (user_id) REFERENCES StudentInfo(UserID),
+    FOREIGN KEY (contact_user_id) REFERENCES StudentInfo(UserID)
+);
+
+-- Create the `blocked_users` table
+CREATE TABLE blocked_users (
+    block_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT, -- User who is blocking
+    blocked_user_id INT, -- User who is blocked
+    FOREIGN KEY (user_id) REFERENCES StudentInfo(UserID),
+    FOREIGN KEY (blocked_user_id) REFERENCES StudentInfo(UserID)
+);
+
