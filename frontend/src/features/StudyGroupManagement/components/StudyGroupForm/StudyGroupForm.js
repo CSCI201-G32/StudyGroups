@@ -1,4 +1,5 @@
 import React from 'react';
+import DayTimeComp from '../../../../components/InputField/DayTimeComp';
 
 const StudyGroupForm = ({
     groupName,
@@ -7,6 +8,8 @@ const StudyGroupForm = ({
     onCourseInputChange,
     onAddCourse,
     newCourse,
+    meetingTimes,
+    onAddMeetingTime,
     privacy,
     code,
     setCode,
@@ -14,14 +17,16 @@ const StudyGroupForm = ({
     /* ... other props ... */
   }) => {
     // Form JSX
+    
     return (
-      <form>
+      <form onSubmit={(e) => e.preventDefault()}>
         <input 
             type="text"
             value={groupName}
             onChange={onGroupNameChange}
             placeholder="Enter Group Name"
         />
+        <br></br>
         {/* Course input */}
         <input
           type="text"
@@ -34,7 +39,9 @@ const StudyGroupForm = ({
         {/* List of added courses */}
         {courses.map((course, index) => <div key={index}>{course}</div>)}
   
-        {/* ... other form inputs ... */}
+        <DayTimeComp
+        meetingTimes={meetingTimes}
+        onAddMeetingTime={onAddMeetingTime}/>
   
         {/* Conditional rendering for 'CODE' field */}
         {privacy === 'PRIVATE' && (
@@ -47,8 +54,8 @@ const StudyGroupForm = ({
         )}
   
         {/* ... other form inputs ... */}
-  
-        <button type="button" onClick={onSubmit}>Create</button>
+        <br></br>
+        <button type="button" onClick={onSubmit}>Create Study Group</button>
       </form>
     );
   };

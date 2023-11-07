@@ -5,7 +5,7 @@ const CreateStudyGroupPage = () => {
   const [groupName, setGroupName] = useState('');
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState('');
-  const [meetingTimes, setMeetingTimes] = useState({});
+  const [meetingTimes, setMeetingTimes] = useState([]);
   const [location, setLocation] = useState('ONLINE'); // default to ONLINE
   const [privacy, setPrivacy] = useState('PUBLIC');
   const [code, setCode] = useState('');
@@ -23,6 +23,13 @@ const CreateStudyGroupPage = () => {
       setCourses([...courses, newCourse]);
       setNewCourse('');
     }
+  };
+
+  const handleAddMeetingTime = (day, time) => {
+    setMeetingTimes(prevMeetingTimes => [
+      ...prevMeetingTimes,
+      { day, time }
+    ]);
   };
 
   const handlePrivacyChange = (event) => {
@@ -47,7 +54,7 @@ const CreateStudyGroupPage = () => {
         onAddCourse={handleAddCourse}
         newCourse={newCourse}
         meetingTimes={meetingTimes}
-        setMeetingTimes={setMeetingTimes}
+        onAddMeetingTime={handleAddMeetingTime}
         location={location}
         setLocation={setLocation}
         privacy={privacy}
