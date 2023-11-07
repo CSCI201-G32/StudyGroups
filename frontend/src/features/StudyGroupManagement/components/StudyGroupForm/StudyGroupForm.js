@@ -10,7 +10,10 @@ const StudyGroupForm = ({
     newCourse,
     meetingTimes,
     onAddMeetingTime,
+    location,
+    onLocationChange,
     privacy,
+    onPrivacyChange,
     code,
     setCode,
     onSubmit
@@ -43,6 +46,30 @@ const StudyGroupForm = ({
         meetingTimes={meetingTimes}
         onAddMeetingTime={onAddMeetingTime}/>
   
+        <input 
+            type="text"
+            value={location}
+            onChange={onLocationChange}
+            placeholder="Location"
+        />
+
+        <div>
+          <button
+            type="button"
+            onClick={() => onPrivacyChange('PUBLIC')}
+            className={privacy === 'PUBLIC' ? 'active' : ''}
+          >
+            Public
+          </button>
+          <button
+            type="button"
+            onClick={() => onPrivacyChange('PRIVATE')}
+            className={privacy === 'PRIVATE' ? 'active' : ''}
+          >
+            Private
+          </button>
+        </div>
+
         {/* Conditional rendering for 'CODE' field */}
         {privacy === 'PRIVATE' && (
           <input

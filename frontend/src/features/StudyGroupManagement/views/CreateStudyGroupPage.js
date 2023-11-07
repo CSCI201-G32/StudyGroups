@@ -6,7 +6,7 @@ const CreateStudyGroupPage = () => {
   const [courses, setCourses] = useState([]);
   const [newCourse, setNewCourse] = useState('');
   const [meetingTimes, setMeetingTimes] = useState([]);
-  const [location, setLocation] = useState('ONLINE'); // default to ONLINE
+  const [location, setLocation] = useState('');
   const [privacy, setPrivacy] = useState('PUBLIC');
   const [code, setCode] = useState('');
 
@@ -32,20 +32,34 @@ const CreateStudyGroupPage = () => {
     ]);
   };
 
-  const handlePrivacyChange = (event) => {
-    setPrivacy(event.target.value);
-    if (event.target.value !== 'PRIVATE') {
+  const handleLocation = (event) => {
+    setLocation(event.target.value);
+  }
+
+  const handlePrivacyChange = (privacy) => {
+    setPrivacy(privacy);
+    if (privacy !== 'PRIVATE') {
       setCode('');
     }
   };
 
   const handleSubmit = () => {
-    // submit logic
+    const studyGroupData = {
+      groupName: groupName,
+      courses: courses,
+      meetingTimes: meetingTimes,
+      location: location,
+      privacy: privacy,
+      code: privacy === 'PRIVATE' ? code : undefined,
+    };
+  
+    console.log(studyGroupData);
+    //sendDataToBackend(studyGroupData);
   };
 
   return (
     <div>
-      <p>Create Group</p>
+      <h1>Create Study Group</h1>
       <StudyGroupForm
         groupName={groupName}
         onGroupNameChange={handleGroupNameChange}
@@ -56,9 +70,9 @@ const CreateStudyGroupPage = () => {
         meetingTimes={meetingTimes}
         onAddMeetingTime={handleAddMeetingTime}
         location={location}
-        setLocation={setLocation}
+        onLocationChange={handleLocation}
         privacy={privacy}
-        handlePrivacyChange={handlePrivacyChange}
+        onPrivacyChange={handlePrivacyChange}
         code={code}
         setCode={setCode}
         onSubmit={handleSubmit}
