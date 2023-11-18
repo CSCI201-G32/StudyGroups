@@ -1,0 +1,25 @@
+{
+    "groupName": "Test Name",
+    "courses": [
+        "Course1",
+        "Course2",
+        "Course3"
+    ],
+    "meetingTimes": [
+        {
+            "day": "Mon",
+            "time": "12:18"
+        },
+        {
+            "day": "Mon",
+            "time": "12:20"
+        },
+        {
+            "day": "thursday",
+            "time": "15:19"
+        }
+    ],
+    "location": "THH302",
+    "privacy": "PRIVATE",
+    "code": "TTCODE"
+}
