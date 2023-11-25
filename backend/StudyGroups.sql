@@ -127,3 +127,76 @@ CREATE TABLE blocked_users (
     FOREIGN KEY (blocked_user_id) REFERENCES StudentInfo(UserID)
 );
 
+
+/* -----------------------------------------------*/
+/* This section is for the actual study groups    */
+/*------------------------------------------------*/
+
+-- Creates the main study groups table to be used for the meetings table
+-- This is the building block for the study groups meeting and study groups courses table
+CREATE TABLE StudyGroups (
+    group_id INT AUTO_INCREMENT PRIMARY KEY,
+    group_name VARCHAR(40) NOT NULL,
+    location VARCHAR(40),
+    privacy ENUM('PRIVATE', 'PUBLIC') NOT NULL, -- Privacy can only be either 'PUBLIC' or 'PRIVATE'
+    access_code VARCHAR(6) NOT NULL -- Code to access the study group
+);
+
+-- Creates a table for the meeting day and times of study groups
+-- This is called from the program to get the study groups, as well as their meeting times
+CREATE TABLE StudyGroupMeetings (
+    meeting_id INT PRIMARY KEY AUTO_INCREMENT,
+    meeting_day VARCHAR(10) NOT NULL,
+    meeting_time VARCHAR(5) NOT NULL,
+    group_id INT, -- Used to find the rest of the information for the study group
+    course_id INT,
+    FOREIGN KEY (group_id) REFERENCES StudyGroups(group_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(CourseID)
+);
+
+-- Creates a table for the courses of study groups
+-- This is called from the program to get the courses of each study group
+CREATE TABLE StudyGroupCourses (
+    group_id INT,
+    course_id INT,
+    FOREIGN KEY (group_id) REFERENCES StudyGroups(group_id),
+    FOREIGN KEY (course_id) REFERENCES Courses(CourseID),
+    PRIMARY KEY (group_id, course_id)
+);
+
+-- Insert sample study group
+INSERT INTO StudyGroups (group_name, location, privacy, access_code) VALUES ('Test Group Name', 'THH101', 'PRIVATE', '123456');
+
+-- Associate courses with the study group
+INSERT INTO StudyGroupCourses (group_ID, course_ID) VALUES (1, 1); -- Assuming the study group ID is 1 and course ID is 1 (CSCI201)
+INSERT INTO StudyGroupCourses (group_ID, course_ID) VALUES (1, 2); -- Assuming the study group ID is 1 and course ID is 2 (CSCI270)
+
+-- Associate meeting times with the study group
+INSERT INTO StudyGroupMeetings (meeting_day, meeting_time, group_id, course_id) VALUES ('Mon', '20:10', '1', '1'); -- Assuming the study group ID is 1 and the course ID is 1 and the meeting is Mon 20:10
+INSERT INTO StudyGroupMeetings (meeting_day, meeting_time, group_id, course_id) VALUES ('Wednesday', '21:10', '1', '2'); -- Assuming the study group ID is 1 and the course ID is 2 and the meeting is Wed 21:10
+
+/* Example SQL query to only get study groups with courses
+
+SELECT sg.*, c.CourseName
+FROM studygroups.studygroups sg
+JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id
+JOIN studygroups.Courses c ON sc.course_id = c.CourseID;
+*/
+
+/* Example SQL query to get study groups with each course and its specific meeting date and time for each study group
+
+SELECT DISTINCT
+    sm.meeting_id, 
+    sm.meeting_day, 
+    sm.meeting_time, 
+    sg.*, 
+    c.CourseName 
+FROM 
+    studygroups.studygroupmeetings sm
+JOIN 
+    studygroups.studygroups sg ON sm.group_id = sg.group_id
+JOIN 
+    studygroups.studygroupcourses sc ON sc.group_id = sm.group_id
+JOIN 
+    studygroups.Courses c ON sm.course_id = c.CourseID;
+*/
