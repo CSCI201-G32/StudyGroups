@@ -1,5 +1,6 @@
 import React from 'react';
 import DayTimeComp from '../../../../components/InputField/DayTimeComp';
+import '../../../../assets/StudyGroup.css';
 
 const StudyGroupForm = ({
     groupName,
@@ -21,13 +22,30 @@ const StudyGroupForm = ({
   }) => {
     // Form JSX
     
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      
+      if(courses.length === 0){
+        alert("At least one course must be added.");
+        return; 
+      }
+
+      if(meetingTimes.length === 0){
+        alert("At least one meeting time must be added.");
+        return; 
+      }
+
+      onSubmit();
+  };
+
     return (
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={handleSubmit} >
         <input 
             type="text"
             value={groupName}
             onChange={onGroupNameChange}
             placeholder="Enter Group Name"
+            required
         />
         <br></br>
         {/* Course input */}
@@ -40,7 +58,11 @@ const StudyGroupForm = ({
         <button type="button" onClick={onAddCourse}>Add</button>
   
         {/* List of added courses */}
-        {courses.map((course, index) => <div key={index}>{course}</div>)}
+        <div className="course-list">
+    {courses.map((course, index) => (
+        <div key={index} className="course-item">{course}</div>
+    ))}
+</div>  
   
         <DayTimeComp
         meetingTimes={meetingTimes}
@@ -51,9 +73,10 @@ const StudyGroupForm = ({
             value={location}
             onChange={onLocationChange}
             placeholder="Location"
+            required
         />
 
-        <div>
+        <div class="privacy-buttons">
           <button
             type="button"
             onClick={() => onPrivacyChange('PUBLIC')}
@@ -70,22 +93,24 @@ const StudyGroupForm = ({
           </button>
         </div>
 
-        {/* Conditional rendering for 'CODE' field */}
         {privacy === 'PRIVATE' && (
           <input
             type="text"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder="Enter Code"
+            required
           />
         )}
-  
-        {/* ... other form inputs ... */}
+
         <br></br>
-        <button type="button" onClick={onSubmit}>Create Study Group</button>
+        <button type="submit">Create Study Group</button>
       </form>
     );
+    
   };
+
+  
   
   export default StudyGroupForm;
   

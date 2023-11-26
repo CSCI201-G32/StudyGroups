@@ -1,0 +1,53 @@
+/* DayTimeComp Styles */
+.day-time-comp {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 8px;
+}
+
+.day-time-comp div {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* DayTimeSelection Styles */
+.day-time-selection {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.day-time-selection button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.day-time-selection button:hover {
+    background-color: #0056b3;
+}
+
+/* DaySelection Styles */
+.day-selection {
+    margin-right: 10px;
+}
+
+.day-selection select {
+    padding: 6px 12px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}
+
+/* TimeSelection Styles */
+.time-selection input {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+}

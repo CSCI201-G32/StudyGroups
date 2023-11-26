@@ -1,9 +1,10 @@
 import React from 'react';
 import DayTimeSelection from './DayTimeSelection';
+import '../../assets/DayTime.css'; 
 
 const DayTimeComp = ({ meetingTimes, onAddMeetingTime }) => {
   return (
-    <div>
+    <div class="day-time-comp">
       <DayTimeSelection onAddSelection={onAddMeetingTime} />
 
       <div>

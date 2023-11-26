@@ -2,15 +2,17 @@ import React from 'react';
 
 const DaySelection = ({ day, setDay }) => {
     return (
+      <div class="day-selection">
           <select name="days" id="days" value={day} onChange={(e) => setDay(e.target.value)}>
-            <option value="monday">Mon</option>
-            <option value="tuesday">Tues</option>
-            <option value="wednesday">Weds</option>
-            <option value="thursday">Thurs</option>
-            <option value="friday">Fri</option>
-            <option value="saturday">Sat</option>
-            <option value="sunday">Sun</option>
+            <option value="Mon">Mon</option>
+            <option value="Tues">Tues</option>
+            <option value="Weds">Weds</option>
+            <option value="Thurs">Thurs</option>
+            <option value="Fri">Fri</option>
+            <option value="Sat">Sat</option>
+            <option value="Sun">Sun</option>
           </select>
+          </div>
       );
     };
     

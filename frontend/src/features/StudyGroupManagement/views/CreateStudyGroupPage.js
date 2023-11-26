@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StudyGroupForm from '../components/StudyGroupForm/StudyGroupForm';
+import "../../../assets/StudyGroupPage.css";
 
 const CreateStudyGroupPage = () => {
   const [groupName, setGroupName] = useState('');
@@ -53,8 +54,8 @@ const CreateStudyGroupPage = () => {
       code: privacy === 'PRIVATE' ? code : undefined,
     };
   
-    console.log(studyGroupData);
-    //sendDataToBackend(studyGroupData);
+    console.log(JSON.stringify(studyGroupData, null, 2));
+    sendDataToBackend(studyGroupData);
   };
 
   return (
@@ -80,5 +81,26 @@ const CreateStudyGroupPage = () => {
     </div>
   );
 };
+
+function sendDataToBackend(studyGroupData){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState === 4 && this.status === 200) {
+            console.log("sent data success");
+        }
+    };
+    
+    var queryString = "StudyGroupCreateServlet?groupName=" + encodeURIComponent(studyGroupData.groupName) + 
+                  "&courses=" + encodeURIComponent(studyGroupData.courses.join(',')) + 
+                  "&meetingTimes=" + encodeURIComponent(studyGroupData.meetingTimes.join(',')) + 
+                  "&location=" + encodeURIComponent(studyGroupData.location) + 
+                  "&privacy=" + encodeURIComponent(studyGroupData.privacy) + 
+                  (studyGroupData.code ? "&code=" + encodeURIComponent(studyGroupData.code) : "");
+
+    console.log("Final URL being requested:", queryString);
+
+    xhttp.open("GET", queryString, true);
+    xhttp.send();
+}
 
 export default CreateStudyGroupPage;

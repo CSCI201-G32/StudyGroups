@@ -1,0 +1,64 @@
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+input[type="text"], button {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.active {
+    background-color: #31708f;
+    color: white;
+}
+
+/* Course list styling */
+div.course-list {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #eef2f7;
+    border-radius: 4px;
+}
+
+.course-item {
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #d1ecf1;
+    border: 1px solid #bee5eb;
+    border-radius: 4px;
+}
+
+/* Privacy button styling */
+.privacy-buttons button {
+    width: auto;
+    margin: 5px;
+    padding: 8px 16px;
+}
+
+/* Submit button specific styling */
+button[type="submit"] {
+    background-color: #007bff;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
