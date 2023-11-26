@@ -1,64 +1,95 @@
+/* General Form Styles */
 form {
     max-width: 600px;
-    margin: 20px auto;
+    margin: 40px auto;
     padding: 20px;
-    border: 1px solid #ddd;
+    background-color: #fff;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* subtle shadow for depth */
 }
 
-input[type="text"], button {
+input[type="text"], button, select {
     width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ccc;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: 2px solid #990000; /* USC Cardinal for borders */
     border-radius: 4px;
+    box-sizing: border-box; /* ensures padding does not affect width */
 }
 
+/* Button Styling */
 button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
+    background-color: #FFCC00; /* USC Gold */
+    color: #990000; /* USC Cardinal */
+    font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #e6b800; /* Darker gold */
 }
 
+/* Active class for selected items */
 .active {
-    background-color: #31708f;
+    background-color: #990000; /* USC Cardinal */
     color: white;
 }
 
-/* Course list styling */
+.course-input {
+    display: flex;
+    gap: 20px;
+    /* Ensure the parent doesn't have any padding or border 
+       that could affect the total available width */
+}
+
+.course-input > input {
+    flex-grow: 4; /* input takes 4 parts of the space */
+    flex-shrink: 1;
+    flex-basis: 0; /* Start with 0 width and grow */
+}
+
+.course-input > button {
+    flex-grow: 1; /* button takes 1 part of the space */
+    flex-shrink: 1;
+    flex-basis: 0; /* Start with 0 width and grow */
+}
+
+/* Course List Styling */
 div.course-list {
-    margin-top: 10px;
-    padding: 10px;
-    background-color: #eef2f7;
-    border-radius: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* adds space between items */
+    margin-top: 20px;
 }
 
 .course-item {
-    margin: 5px 0;
-    padding: 5px;
-    background-color: #d1ecf1;
-    border: 1px solid #bee5eb;
-    border-radius: 4px;
+    padding: 10px 15px;
+    background-color: #990000; /* USC Cardinal */
+    color: #fff;
+    border-radius: 20px; /* Rounded edges for course tags */
+    text-align: center;
+    cursor: default;
 }
 
-/* Privacy button styling */
+/* Privacy Button Styling */
+.privacy-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
 .privacy-buttons button {
     width: auto;
-    margin: 5px;
     padding: 8px 16px;
 }
 
-/* Submit button specific styling */
+/* Submit Button Specific Styling */
 button[type="submit"] {
-    background-color: #007bff;
+    background-color: #990000; /* USC Cardinal */
+    color: white;
 }
 
 button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #780000; /* Darker cardinal */
 }

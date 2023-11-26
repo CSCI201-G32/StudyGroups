@@ -2,7 +2,7 @@ import React from 'react';
 
 const DaySelection = ({ day, setDay }) => {
     return (
-      <div class="day-selection">
+      <div className="day-selection">
           <select name="days" id="days" value={day} onChange={(e) => setDay(e.target.value)}>
             <option value="Mon">Mon</option>
             <option value="Tues">Tues</option>

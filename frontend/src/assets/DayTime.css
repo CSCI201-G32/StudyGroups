@@ -1,53 +1,68 @@
-/* DayTimeComp Styles */
 .day-time-comp {
+    
+}
+
+/* Styling for individual items within the component */
+.day-time-comp div {
     margin: 10px 0;
     padding: 10px;
-    background-color: #f2f2f2;
-    border-radius: 8px;
-}
-
-.day-time-comp div {
-    margin: 5px 0;
-    padding: 5px;
-    background-color: #e9ecef;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
-}
-
-/* DayTimeSelection Styles */
-.day-time-selection {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-}
-
-.day-time-selection button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.day-time-selection button:hover {
-    background-color: #0056b3;
-}
-
-/* DaySelection Styles */
-.day-selection {
+    background-color: #FFCC00; /* USC Gold */
+    color: #990000; /* USC Cardinal text for contrast */
+    border-radius: 20px; /* rounded edges for a modern look */
+    display: inline-block; /* to align items side by side */
     margin-right: 10px;
 }
 
-.day-selection select {
-    padding: 6px 12px;
-    border: 1px solid #ced4da;
-    border-radius: 4px;
+/* DayTimeSelection Styles - Container for day and time selection */
+.day-time-selection {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
 }
 
-/* TimeSelection Styles */
-.time-selection input {
-    padding: 6px 10px;
-    border: 1px solid #ced4da;
+/* Button within the day/time selection for adding new times */
+.day-time-selection button {
+    background-color: #990000; /* USC Cardinal */
+    color: white;
+    padding: 10px 20px;
     border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect for the button */
+.day-time-selection button:hover {
+    background-color: #780000; /* a darker shade for hover state */
+}
+
+/* DaySelection Styles - Styles for the day dropdown */
+.day-selection {
+    margin-right: 15px;
+    flex-grow: 1; /* allows the select to fill available space */
+}
+
+/* Select dropdown styling */
+.day-selection select {
+    width: 100%; /* full width of the container */
+    padding: 10px 15px;
+    border: 2px solid #990000; /* USC Cardinal */
+    border-radius: 4px;
+    background-color: white;
+    color: #990000; /* USC Cardinal text */
+}
+
+/* TimeSelection Styles - Styles for the time input */
+.time-selection {
+    flex-grow: 2; /* allows the time input to be larger than the select */
+}
+
+/* Time input styling */
+.time-selection input {
+    width: 100%; /* full width of the container */
+    padding: 10px 15px;
+    border: 2px solid #990000; /* USC Cardinal */
+    border-radius: 4px;
+    background-color: white;
+    color: #990000; /* USC Cardinal text */
 }

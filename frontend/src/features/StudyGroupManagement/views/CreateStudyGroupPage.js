@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import StudyGroupForm from '../components/StudyGroupForm/StudyGroupForm';
-import "../../../assets/StudyGroupPage.css";
 
 const CreateStudyGroupPage = () => {
   const [groupName, setGroupName] = useState('');

@@ -5,14 +5,15 @@ import {
   Route
 } from 'react-router-dom';
 import CreateStudyGroupPage from './features/StudyGroupManagement/views/CreateStudyGroupPage';
+import FullStudyPage from './features/StudyGroupManagement/views/FullStudyPage';
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<CreateStudyGroupPage />} />
-        <Route path="/create-study-group" element={<CreateStudyGroupPage />} />
-        {/* Define other routes as needed */}
+        <Route path="/create" element={<CreateStudyGroupPage />} />
+        <Route path="/:groupName/view" element={<FullStudyPage />} />
       </Routes>
     </Router>
   );

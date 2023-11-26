@@ -3,7 +3,7 @@ import React from 'react';
 const TimeSelection = ({ time, setTime }) => {
 
     return (
-      <div class="time-selection">
+      <div className="time-selection">
 <input 
           type="time" 
           id="meetinTime" 

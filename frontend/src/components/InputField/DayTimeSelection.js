@@ -16,7 +16,7 @@ const DayTimeSelection = ({ onAddSelection }) => {
   };
 
   return (
-    <div class="day-time-selection">
+    <div className="day-time-selection">
       <DaySelection day={day} setDay={setDay} />
       <TimeSelection time={time} setTime={setTime} />
       <button type="button" onClick={handleAddMeetingTime}>Add Day & Time</button>
