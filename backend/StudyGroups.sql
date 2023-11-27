@@ -87,7 +87,7 @@ CREATE TABLE messages (
 -- This is the building block for the study groups meeting and study groups courses table
 CREATE TABLE StudyGroups (
     group_id INT AUTO_INCREMENT PRIMARY KEY,
-    group_name VARCHAR(40) NOT NULL,
+    group_name VARCHAR(40) NOT NULL UNIQUE,
     location VARCHAR(40),
     privacy ENUM('PRIVATE', 'PUBLIC') NOT NULL, -- Privacy can only be either 'PUBLIC' or 'PRIVATE'
     access_code VARCHAR(6) NOT NULL -- Code to access the study group
