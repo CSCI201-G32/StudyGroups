@@ -130,7 +130,7 @@ public class SQLConnector {
 	             
 	             
 	             // Finds the courses and adds them to the study group
-	             query = "SELECT sg.group_id, c.CourseName FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_idJOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE sg.group_name = ?";
+	             query = "SELECT sg.group_id, c.CourseName FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE sg.group_name = ?";
 	             
 	             preparedStatement = connection.prepareStatement(query);
 	             preparedStatement.setString(1, groupName);
