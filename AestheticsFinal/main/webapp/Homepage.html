@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Home Page</title>
+</head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+	header {
+		padding: 10px;
+		margin: 25px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		background-color: darkred;
+		color: gold;
+	}
+	header a{
+		margin-right: 15px;
+		text-decoration: none;
+		color:white;
+		font-size:12px;
+		font-family: 'Times New Roman', Times, serif;
+	}
+	intro {
+		padding: 10px;
+		margin: 25px;
+		color: black;
+		font-size: 20px;
+	}
+	content {
+		padding: 10px;
+		display: table;
+		text-align: center;
+		position: absolute;
+		width: 100%;
+		font-size: 15px;
+		font-family:'Times New Roman', Times, serif;
+	}
+	public {
+		position: absolute;
+		width: 50%;
+		left: 0px;
+	}
+	private {
+		position: absolute;
+		width: 50%;
+		right: 0px;
+	}
+</style>
+<script>
+	window.onload = function(){
+	    isUserLoggedIn();
+	}
+	
+	//function from: https://www.w3schools.com/js/js_cookies.asp
+	function getCookie(cname) {
+		let name = cname + "=";
+	  let decodedCookie = decodeURIComponent(document.cookie);
+	  let ca = decodedCookie.split(';');
+	  for(let i = 0; i <ca.length; i++) {
+	    let c = ca[i];
+	    while (c.charAt(0) == ' ') {
+	      c = c.substring(1);
+	    }
+	    if (c.indexOf(name) == 0) {
+	      return c.substring(name.length, c.length);
+	    }
+	  }
+	  return "";
+	}
+	
+	function isUserLoggedIn() {
+		var cookie = getCookie("first");
+		document.getElementById("header").innerHTML = "";
+        
+        var userHTML = 
+        `<header>
+            <div>
+                <h1>StudyManager</h1>
+            </div>
+            <div>
+                <a class="fa fa-home" href="Homepage.html"></a>
+                <a class="fa fa-users" href="Groups.html"></a>
+                <a class="fa fa-search" href="SearchPage.html"></a>
+                <a class="fa fa-calendar" href="Calendar.html"></a>
+                <a class="fa fa-user-circle" href="Account.html"></a>
+                <a class="fa fa-sign-out" href="Logout.html"></a>
+            </div>
+        </header>`;
+        
+        var contentHTML =
+        `<content>
+            <div>
+                <public>
+					<h3>Public Groups:</h3>
+					List the public study groups
+				</public>
+            </div>
+            <div>
+                <private>
+					<h3>Private Groups:</h3>
+					List the private study groups
+				</private>
+            </div>
+        </content>`;
+        
+        var noUserHTML = 
+        `<header>
+            <div>
+                <h1>StudyManager</h1>
+            </div>
+            <div>
+                <a class="fa fa-home" href="Homepage.html"></a>
+                <a class="fa fa-users" href="Groups.html"></a>
+                <a class="fa fa-user-circle" href="LogIn.html"></a>
+            </div>
+        </header>`;
+
+		if(cookie != "") {
+			//user logged in so their html should display home, favorites, restaurant, logout
+			document.getElementById("header").innerHTML = userHTML;
+			document.getElementById("content").innerHTML = contentHTML;
+		}
+		else {
+			//user not logged in so their html should display home and login
+			document.getElementById("header").innerHTML = noUserHTML;
+			document.getElementById("content").innerHTML = contentHTML;
+		}
+	}
+</script>
+<body>
+	<div id="header"></div>
+	<intro>
+		<center>
+			<strong>Welcome to Study Manager!<br>Here you can create and join study groups for any subject!</strong>
+		</center>
+	</intro>
+	<div id="content"></div>
+</body>
+</html>
