@@ -1,3 +1,5 @@
+package StudyGroup;
+
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -118,24 +120,20 @@ public class SQLConnector {
 	    }
 	}
 	
-
-	// Finds the study group in the SQL database based on the group name and returns it as a StudyGroup object
-	 public static StudyGroup getStudyGroup(String groupName) throws SQLException {
-		 
-		 //Gets study groups w courses and meeting times
-		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
-	
-	
+	// Gets all of the study groups
+	public static ArrayList<StudyGroup> getAllStudyGroups() throws SQLException {
+		String query = "SELECT sg.* FROM StudyGroups sg";
+		
 	     try {
 	    	 Connection connection = connect();
 		      PreparedStatement preparedStatement = connection.prepareStatement(query);
-		      preparedStatement.setString(1, groupName);
 		      ResultSet resultSet = preparedStatement.executeQuery();
-	         if (resultSet.next()) {
+		      ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+	         while (resultSet.next()) {
 	        	 String location = resultSet.getString("location");
 	        	 String privacy = resultSet.getString("privacy");
 	        	 String accessCode = resultSet.getString("access_code");
-	             
+	        	 String groupName = resultSet.getString("group_name");
 	
 	             ArrayList<String> courses = new ArrayList<String>();
 	             ArrayList<MeetingTime> meetingTimes = new ArrayList<MeetingTime>();
@@ -157,6 +155,129 @@ public class SQLConnector {
 	             query = "SELECT sm.* FROM studygroups.studygroupmeetings sm JOIN studygroups.studygroups sg ON sm.group_id = sg.group_id WHERE sg.group_name = ?";
 	             preparedStatement = connection.prepareStatement(query);
 	             preparedStatement.setString(1, groupName);
+	             resultSet = preparedStatement.executeQuery();
+	             while (resultSet.next()) {
+	            	 String day = resultSet.getString("meeting_day");
+	            	 String time = resultSet.getString("meeting_time");
+	            	 MeetingTime mt = new MeetingTime(day, time);
+	            	 meetingTimes.add(mt);
+	             }
+	             
+	             StudyGroup studyGroup = new StudyGroup(groupName, courses, meetingTimes, location, privacy, accessCode);
+	             studyGroups.add(studyGroup);
+	         }
+	         return studyGroups; // Returns the arraylist of study groups or null if none were found
+	     } catch (SQLException e) {
+	    	 System.out.println(e.getMessage());
+	    	 return null;
+	     }
+	}
+	
+	
+
+	// Finds the study group in the SQL database based on the parameters provided and returns it as a StudyGroup object
+	 public static StudyGroup getStudyGroup(StudyGroup sg) throws SQLException {
+		 
+		String query = "SELECT sg.* FROM StudyGroups sg";
+		String filteredQuery = "";
+		
+		int numparams = 0;
+		String queryAdder = " WHERE ";
+		String andString = " AND ";
+		boolean groupFilter = false, privacyFilter = false;
+		int groupPosition = -1, privacyPosition = -1;
+		
+		// Checks if group name is filtered for by the user
+		if (sg.getGroupName() != null) {
+			String groupQuery1 = "sg.group_name = ?";
+			
+			if (numparams == 0) {
+				filteredQuery += queryAdder;
+			} else {
+				filteredQuery += andString;
+			}
+			filteredQuery += groupQuery1;
+			numparams++;
+			groupFilter = true;
+			groupPosition = numparams;
+		}
+		
+		// Checks if privacy is filtered for by the user
+		if (sg.getPrivacy() != null) {
+			String groupQuery2 = "sg.privacy = ?";
+			if (numparams == 0) {
+				filteredQuery += queryAdder;
+			} else {
+				filteredQuery += andString;
+			}
+			filteredQuery += groupQuery2;
+			numparams++;
+			privacyFilter = true;
+			privacyPosition = numparams;
+		}
+		
+		// Adds the filters to the query
+		query += filteredQuery;
+	
+	     try {
+	    	 Connection connection = connect();
+		      PreparedStatement preparedStatement = connection.prepareStatement(query);
+		      
+		      if (groupFilter) {
+		    	  preparedStatement.setString(groupPosition, sg.getGroupName());
+		      }
+		      
+		      if (privacyFilter) {
+		    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
+		      }
+		      
+		      ResultSet resultSet = preparedStatement.executeQuery();
+	         if (resultSet.next()) {
+	        	 String location = resultSet.getString("location");
+	        	 String privacy = resultSet.getString("privacy");
+	        	 String accessCode = resultSet.getString("access_code");
+	             String groupName = resultSet.getString("group_name");
+	
+	             ArrayList<String> courses = new ArrayList<String>();
+	             ArrayList<MeetingTime> meetingTimes = new ArrayList<MeetingTime>();
+	             
+	             
+	             // Finds the courses and adds them to the study group
+	             query = "SELECT sg.group_id, c.CourseName FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID";
+	             query += filteredQuery;
+	             
+	             preparedStatement = connection.prepareStatement(query);
+	             
+	             // Assigns the filters based on their positions
+	              if (groupFilter) {
+			    	  preparedStatement.setString(groupPosition, sg.getGroupName());
+			      }
+			      
+			      if (privacyFilter) {
+			    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
+			      }
+			      
+	             resultSet = preparedStatement.executeQuery();
+	             
+	             while (resultSet.next()) {
+	            	 String course = resultSet.getString("CourseName");
+	            	 courses.add(course);
+	             }
+	             
+	             // Finds the meeting times and adds them to the study group
+	             query = "SELECT sm.* FROM studygroups.studygroupmeetings sm JOIN studygroups.studygroups sg ON sm.group_id = sg.group_id";
+	             query += filteredQuery;
+	             preparedStatement = connection.prepareStatement(query);
+	             
+				 // Assigns the filters based on their positions
+	             if (groupFilter) {
+			    	  preparedStatement.setString(groupPosition, sg.getGroupName());
+			      }
+			      
+			      if (privacyFilter) {
+			    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
+			      }
+			      
 	             resultSet = preparedStatement.executeQuery();
 	             while (resultSet.next()) {
 	            	 String day = resultSet.getString("meeting_day");

@@ -1,4 +1,4 @@
-
+package StudyGroup;
 
 import java.util.ArrayList;
 
@@ -39,6 +39,7 @@ public class StudyGroupCreateServlet extends HttpServlet {
         
         String[] courses = gson.fromJson(request.getParameter("courses"), String[].class);
         MeetingTime[] meetingTimes = gson.fromJson(request.getParameter("meetingTimes"), MeetingTime[].class);
+        
         
         StudyGroup sg = new StudyGroup(groupName, new ArrayList<>(Arrays.asList(courses)), new ArrayList<>(Arrays.asList(meetingTimes)), location, privacy, code);
 		PrintWriter writer = response.getWriter();
