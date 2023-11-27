@@ -1,5 +1,6 @@
 .day-time-comp {
-    
+    display: flex;
+    justify-content: center;
 }
 
 /* Styling for individual items within the component */

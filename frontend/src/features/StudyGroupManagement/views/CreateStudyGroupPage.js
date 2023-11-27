@@ -89,17 +89,23 @@ function sendDataToBackend(studyGroupData){
         }
     };
     
-    var queryString = "StudyGroupCreateServlet?groupName=" + encodeURIComponent(studyGroupData.groupName) + 
-                  "&courses=" + encodeURIComponent(studyGroupData.courses.join(',')) + 
-                  "&meetingTimes=" + encodeURIComponent(studyGroupData.meetingTimes.join(',')) + 
-                  "&location=" + encodeURIComponent(studyGroupData.location) + 
-                  "&privacy=" + encodeURIComponent(studyGroupData.privacy) + 
-                  (studyGroupData.code ? "&code=" + encodeURIComponent(studyGroupData.code) : "");
+    var url = "http://localhost:8080/ProjectTest/StudyGroupCreateServlet";
 
-    console.log("Final URL being requested:", queryString);
+    // Prepare URL-encoded data
+    var formData = new URLSearchParams();
+    formData.append("groupName", studyGroupData.groupName);
+    formData.append("location", studyGroupData.location);
+    formData.append("privacy", studyGroupData.privacy);
+    formData.append("code", studyGroupData.code || ""); // handle optional code
+    formData.append("courses", JSON.stringify(studyGroupData.courses));
+    formData.append("meetingTimes", JSON.stringify(studyGroupData.meetingTimes));
 
-    xhttp.open("GET", queryString, true);
-    xhttp.send();
+    xhttp.open("POST", url, true);
+
+    // Set Content-Type for form data
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+
+    xhttp.send(formData.toString()); // line 108
 }
 
 export default CreateStudyGroupPage;

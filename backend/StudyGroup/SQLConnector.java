@@ -1,5 +1,3 @@
-package StudyGroup;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -15,7 +13,7 @@ public class SQLConnector {
 		Connection conn = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/StudyGroup?user=root&password=root");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/StudyGroups?user=root&password=Minecraft1");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -23,6 +21,10 @@ public class SQLConnector {
 	}
 	
 	public static int insertStudyGroup(StudyGroup sg) throws SQLException {
+		System.out.println(sg.getGroupName());
+		System.out.println(sg.getLocation());
+		System.out.println(sg.getPrivacy());
+		System.out.println(sg.getAccessCode());
 	    String query = "INSERT INTO StudyGroups (group_name, location, privacy, access_code) VALUES (?, ?, ?, ?)";
 	    try {
 	        Connection conn = connect();
@@ -90,20 +92,30 @@ public class SQLConnector {
 	
 	// Adds the course based on the course name
 	private static int addCourse(Connection connection, String courseName) {
-		String query = "INSERT INTO Courses (CourseName) VALUES (?)";
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-			preparedStatement.setString(1, courseName);
-		    ResultSet resultSet = preparedStatement.executeQuery();
-		    if (resultSet.next()) {
-		    	int courseID = resultSet.getInt("CourseID");
-		    	return courseID;
-		    }
-		    return -1;
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			return -1;
-		}
+	    String query = "INSERT INTO Courses (CourseName) VALUES (?)";
+	    try {
+	        PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+	        preparedStatement.setString(1, courseName);
+
+	        // Use executeUpdate() instead of executeQuery() for INSERT statements
+	        int affectedRows = preparedStatement.executeUpdate();
+	        System.out.println("Number of affected rows: " + affectedRows);
+
+	        // Retrieve the generated key (course ID)
+	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        if (resultSet.next()) {
+	            int courseID = resultSet.getInt(1); // Use column index 1 to retrieve the first column
+	            System.out.println("Generated course ID: " + courseID);
+	            return courseID;
+	        } else {
+	            System.out.println("No course ID generated.");
+	            return -1;
+	        }
+	    } catch (SQLException e) {
+	        System.out.println("SQLException in addCourse: " + e.getMessage());
+	        e.printStackTrace();
+	        return -1;
+	    }
 	}
 	
 

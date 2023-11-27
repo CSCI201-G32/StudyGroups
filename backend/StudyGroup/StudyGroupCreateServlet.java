@@ -1,4 +1,4 @@
-package StudyGroup;
+
 
 import java.util.ArrayList;
 
@@ -22,6 +22,12 @@ public class StudyGroupCreateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
+	
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    response.setHeader("Access-Control-Allow-Origin", "*");
+	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	}
 
 	// Adds the study group to the database
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,6 +43,9 @@ public class StudyGroupCreateServlet extends HttpServlet {
         StudyGroup sg = new StudyGroup(groupName, new ArrayList<>(Arrays.asList(courses)), new ArrayList<>(Arrays.asList(meetingTimes)), location, privacy, code);
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
+	    response.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins for now
+	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		try {
 			int studyGroupID = SQLConnector.insertStudyGroup(sg);
 			writer.println(studyGroupID);
