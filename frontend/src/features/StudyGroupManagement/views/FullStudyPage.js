@@ -7,35 +7,55 @@ const FullStudyPage = () => {
     const [groupInfo,
         setGroupInfo] = useState(null);
 
-    useEffect(() => {
-        // Replace this with the actual fetch call to your servlet
-        const fetchData = async() => {
-            // For testing, using predefined JSON
-            const testData = {
-                groupName: "Best-Group",
-                courses: [
-                    "CSCI201", "EE250"
-                ],
-                meetingTimes: [
-                    {
-                        day: "Mon",
-                        time: "15:23"
-                    }, {
-                        day: "Weds",
-                        time: "12:19"
+    function fetchStudyGroup(groupName, callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    try {
+                        var responseData = JSON.parse(this.responseText);
+                        callback(null, responseData);
+                    } catch (e) {
+                        callback(e, null);
                     }
-                ],
-                location: "THH202",
-                privacy: "PUBLIC"
-            };
-            setGroupInfo(testData);
+                } else {
+                    callback(new Error("Request failed with status: " + this.status), null);
+                }
+            }
         };
 
-        fetchData();
+        var url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
+
+        var formData = new URLSearchParams();
+        formData.append("groupName", groupName);
+
+        xhttp.open("POST", url, true);
+
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhttp.send(formData.toString());
+    }
+
+    useEffect(() => {
+        // Ensure groupName is not undefined or null
+        if (!groupName) {
+            console.error("Group name is not provided.");
+            return;
+        }
+
+        fetchStudyGroup(groupName, function (error, data) {
+            if (error) {
+                console.error("Error fetching data:", error);
+            } else {
+                console.log("Received data:", data);
+                setGroupInfo(data); // Update the state with the fetched data
+            }
+        });
+
     }, [groupName]);
 
     if (!groupInfo) {
-        return <div>Loading...</div>;
+        return <div>Ensure your group exists... Loading....</div>;
     }
 
     return (
@@ -59,10 +79,10 @@ const FullStudyPage = () => {
                 <p>Location: {groupInfo.location}</p>
                 <p>Privacy: {groupInfo.privacy}</p>
             </div>
-            <div class="sidebar">
+            <div className="sidebar">
                 <h2>Current Members</h2>
 
-                <button class="join">Join</button>
+                <button className="join">Join</button>
             </div>
         </div>
     );

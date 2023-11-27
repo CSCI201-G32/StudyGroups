@@ -22,6 +22,35 @@ const StudyGroupForm = ({
 }) => {
     // Form JSX
 
+    function fetchStudyGroup(groupName, callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    try {
+                        var responseData = JSON.parse(this.responseText);
+                        callback(null, responseData);
+                    } catch (e) {
+                        callback(e, null);
+                    }
+                } else {
+                    callback(new Error("Request failed with status: " + this.status), null);
+                }
+            }
+        };
+
+        var url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
+
+        var formData = new URLSearchParams();
+        formData.append("groupName", groupName);
+
+        xhttp.open("POST", url, true);
+
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhttp.send(formData.toString());
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -35,7 +64,20 @@ const StudyGroupForm = ({
             return;
         }
 
-        onSubmit();
+        fetchStudyGroup(groupName, (error, responseData) => {
+            if (error) {
+                console.error("Error fetching data: ", error);
+                return;
+            }
+
+            // If the group name already exists
+            if (responseData) {
+                alert("This group name already exists. Please choose a different name.");
+            } else {
+                // Group name does not exist, proceed with the form submission
+                onSubmit();
+            }
+        });
     };
 
     return (
