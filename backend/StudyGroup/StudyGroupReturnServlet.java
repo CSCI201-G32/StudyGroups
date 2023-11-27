@@ -30,7 +30,6 @@ public class StudyGroupReturnServlet extends HttpServlet {
         
         String[] courses = gson.fromJson(request.getParameter("courses"), String[].class);
         MeetingTime[] meetingTimes = gson.fromJson(request.getParameter("meetingTimes"), MeetingTime[].class);
-        StudyGroup parameters = new StudyGroup(groupName, new ArrayList<>(Arrays.asList(courses)), new ArrayList<>(Arrays.asList(meetingTimes)), location, privacy, code);
         
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
@@ -43,6 +42,7 @@ public class StudyGroupReturnServlet extends HttpServlet {
 				responseJSON = gson.toJson(studyGroups);
 	        } else {
 				// Otherwise returns study group based on the parameters
+				StudyGroup parameters = new StudyGroup(groupName, new ArrayList<>(Arrays.asList(courses)), new ArrayList<>(Arrays.asList(meetingTimes)), location, privacy, code);
 				StudyGroup sg = SQLConnector.getStudyGroup(parameters);
 				responseJSON = gson.toJson(sg);
 	        }
