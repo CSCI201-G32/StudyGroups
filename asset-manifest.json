@@ -1,24 +1,24 @@
 {
   "files": {
-    "main.css": "/StudyGroups/static/css/main.090f5e7b.chunk.css",
-    "main.js": "/StudyGroups/static/js/main.6f0b0835.chunk.js",
-    "main.js.map": "/StudyGroups/static/js/main.6f0b0835.chunk.js.map",
-    "runtime-main.js": "/StudyGroups/static/js/runtime-main.75183c0e.js",
-    "runtime-main.js.map": "/StudyGroups/static/js/runtime-main.75183c0e.js.map",
-    "static/js/2.7367f8c0.chunk.js": "/StudyGroups/static/js/2.7367f8c0.chunk.js",
-    "static/js/2.7367f8c0.chunk.js.map": "/StudyGroups/static/js/2.7367f8c0.chunk.js.map",
-    "static/js/3.e3a48a4e.chunk.js": "/StudyGroups/static/js/3.e3a48a4e.chunk.js",
-    "static/js/3.e3a48a4e.chunk.js.map": "/StudyGroups/static/js/3.e3a48a4e.chunk.js.map",
+    "main.css": "/StudyGroups/static/css/main.9a31c938.chunk.css",
+    "main.js": "/StudyGroups/static/js/main.22ef03cc.chunk.js",
+    "main.js.map": "/StudyGroups/static/js/main.22ef03cc.chunk.js.map",
+    "runtime-main.js": "/StudyGroups/static/js/runtime-main.049959c3.js",
+    "runtime-main.js.map": "/StudyGroups/static/js/runtime-main.049959c3.js.map",
+    "static/js/2.54b74039.chunk.js": "/StudyGroups/static/js/2.54b74039.chunk.js",
+    "static/js/2.54b74039.chunk.js.map": "/StudyGroups/static/js/2.54b74039.chunk.js.map",
+    "static/js/3.2719c492.chunk.js": "/StudyGroups/static/js/3.2719c492.chunk.js",
+    "static/js/3.2719c492.chunk.js.map": "/StudyGroups/static/js/3.2719c492.chunk.js.map",
     "index.html": "/StudyGroups/index.html",
-    "precache-manifest.d80bbd1daa45a6adce9f0cbe387e6b25.js": "/StudyGroups/precache-manifest.d80bbd1daa45a6adce9f0cbe387e6b25.js",
+    "precache-manifest.94e851ae72398391d47ebc1e0ed69c89.js": "/StudyGroups/precache-manifest.94e851ae72398391d47ebc1e0ed69c89.js",
     "service-worker.js": "/StudyGroups/service-worker.js",
-    "static/css/main.090f5e7b.chunk.css.map": "/StudyGroups/static/css/main.090f5e7b.chunk.css.map",
-    "static/js/2.7367f8c0.chunk.js.LICENSE.txt": "/StudyGroups/static/js/2.7367f8c0.chunk.js.LICENSE.txt"
+    "static/css/main.9a31c938.chunk.css.map": "/StudyGroups/static/css/main.9a31c938.chunk.css.map",
+    "static/js/2.54b74039.chunk.js.LICENSE.txt": "/StudyGroups/static/js/2.54b74039.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.75183c0e.js",
-    "static/js/2.7367f8c0.chunk.js",
-    "static/css/main.090f5e7b.chunk.css",
-    "static/js/main.6f0b0835.chunk.js"
+    "static/js/runtime-main.049959c3.js",
+    "static/js/2.54b74039.chunk.js",
+    "static/css/main.9a31c938.chunk.css",
+    "static/js/main.22ef03cc.chunk.js"
   ]
 }
