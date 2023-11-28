@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import '../../../assets/FullStudyPage.css';
+import '../../../assets/study-group/FullStudyPage.css';
 
 const FullStudyPage = () => {
     const {groupName} = useParams();

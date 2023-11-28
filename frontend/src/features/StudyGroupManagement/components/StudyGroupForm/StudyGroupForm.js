@@ -1,6 +1,6 @@
 import React from 'react';
 import DayTimeComp from '../../../../components/InputField/DayTimeComp';
-import '../../../../assets/StudyGroup.css';
+import '../../../../assets/study-group/StudyGroup.css';
 
 const StudyGroupForm = ({
     groupName,

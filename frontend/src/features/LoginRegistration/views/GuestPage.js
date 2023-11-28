@@ -1,5 +1,5 @@
 import React from 'react';
-import './GuestPage';
+import '../../../assets/login/GuestPage.css';
 
 function GuestPage() {
     return (

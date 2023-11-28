@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../../../assets/FullStudyPage.css';
-import '../../../assets/AllStudyGroups.css';
+import '../../../assets/study-group/FullStudyPage.css';
+import '../../../assets/study-group/AllStudyGroups.css';
 import StudyGroupWidget from '../components/StudyGroupWidget';
 import debounce from 'lodash.debounce';
 

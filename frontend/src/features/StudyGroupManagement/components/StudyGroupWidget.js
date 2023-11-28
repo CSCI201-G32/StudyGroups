@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../assets/StudyGroupWidget.css';
+import '../../../assets/study-group/StudyGroupWidget.css';
 import { useNavigate } from 'react-router-dom';
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import './RegisterPage.css';
+import '../../../assets/login/RegisterPage.css';
 
 function RegisterPage() {
 
