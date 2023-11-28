@@ -183,8 +183,8 @@ public class SQLConnector {
 		int numparams = 0;
 		String queryAdder = " WHERE ";
 		String andString = " AND ";
-		boolean groupFilter = false, privacyFilter = false;
-		int groupPosition = -1, privacyPosition = -1;
+		boolean groupFilter = false, privacyFilter = false, coursesFilter = false;
+		int groupPosition = -1, privacyPosition = -1, coursesPosition = -1;
 		
 		// Checks if group name is filtered for by the user
 		if (sg.getGroupName() != null) {
@@ -215,11 +215,30 @@ public class SQLConnector {
 			privacyPosition = numparams;
 		}
 		
+		// Checks if courses is filtered for by the user
+		if (sg.getCourses() != null) {
+			String query3a = " UNION SELECT sg.group_id FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName IN ";
+			String query3b = "(";
+			int i = 0;
+			for (i = 0; i < sg.getCourses().size(); i++) {
+				if (i != sg.getCourses().size()-1) {
+					query3b += "?, ";
+				} else {
+					query3b += "?) ";
+				}
+			}
+			String query3c = "GROUP BY sg.group_id HAVING COUNT(DISTINCT c.CourseName) = " + Integer.toString(i);
+			filteredQuery += query3a + query3b + query3c;
+			numparams++;
+			coursesFilter = true;
+			coursesPosition = numparams;
+		}
+		
 		// Adds the filters to the query
 		query += filteredQuery;
 	
 	     try {
-	    	 Connection connection = connect();
+	    	  Connection connection = connect();
 		      PreparedStatement preparedStatement = connection.prepareStatement(query);
 		      
 		      if (groupFilter) {
@@ -230,9 +249,18 @@ public class SQLConnector {
 		    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
 		      }
 		      
+		      if (coursesFilter) {
+		    	  for (int i = 0; i < sg.getCourses().size(); i++) {
+		    		  preparedStatement.setString(coursesPosition, sg.getCourses().get(i));
+		    		  coursesPosition++;
+		    	  }
+		      }
+		      
 		      ResultSet resultSet = preparedStatement.executeQuery();
 		      
 		      ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+		      
+		      
 		      // Checks if there is a study group found with those parameters
 	         while (resultSet.next()) {
 	        	 String location = resultSet.getString("location");
