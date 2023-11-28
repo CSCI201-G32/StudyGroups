@@ -269,9 +269,9 @@ public class SQLConnector {
 				}
 				filteredQuery += query3;
 			}
-			numparams++;
+			coursesPosition = numparams+1;
+			numparams += sg.getCourses().size();
 			coursesFilter = true;
-			coursesPosition = numparams;
 		}
 		
 		// Checks if meeting times are filtered for by the user
@@ -285,9 +285,9 @@ public class SQLConnector {
 				}
 				filteredQuery += query4;
 			}
-			numparams++;
+			meetingPosition = numparams+1;
+			numparams+= sg.getMeetingTimes().size();
 			meetingFilter = true;
-			meetingPosition = numparams;
 		}
 		
 		// Adds the filters to the query
