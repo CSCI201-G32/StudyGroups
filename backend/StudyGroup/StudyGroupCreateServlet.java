@@ -1,6 +1,4 @@
 package StudyGroup;
-import java.util.ArrayList;
-
 import com.google.gson.Gson;
 
 import java.util.*;
@@ -40,20 +38,27 @@ public class StudyGroupCreateServlet extends HttpServlet {
         String[] courses = gson.fromJson(request.getParameter("courses"), String[].class);
         MeetingTime[] meetingTimes = gson.fromJson(request.getParameter("meetingTimes"), MeetingTime[].class);
         
-        
-        StudyGroup sg = new StudyGroup(groupName, new ArrayList<>(Arrays.asList(courses)), new ArrayList<>(Arrays.asList(meetingTimes)), location, privacy, code);
+        ArrayList<String> coursesList = new ArrayList<>();
+    	if (courses != null) {
+    	    Collections.addAll(coursesList, courses);
+    	}
+
+    	ArrayList<MeetingTime> meetingTimesList = new ArrayList<>();
+    	if (meetingTimes != null) {
+    	    Collections.addAll(meetingTimesList, meetingTimes);
+    	}
+        StudyGroup sg = new StudyGroup(groupName, coursesList, meetingTimesList, location, privacy, code);
 		PrintWriter writer = response.getWriter();
 		response.setContentType("text/plain");
 	    response.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins for now
 	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
 	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		try {
+			int studyGroupID = SQLConnector.insertStudyGroup(sg);
 			if (addUser != null) {
 				SQLConnector.addUserToStudyGroup(addUser, sg);
-			} else {
-				int studyGroupID = SQLConnector.insertStudyGroup(sg);
-				writer.println(studyGroupID);
 			}
+			writer.println(studyGroupID);
 			writer.flush();
 			writer.close();
 		} catch (SQLException e) {
