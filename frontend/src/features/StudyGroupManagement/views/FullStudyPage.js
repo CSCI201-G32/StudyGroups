@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import '../../../assets/study-group/FullStudyPage.css';
+import CourseList from '../components/CourseList';
 
 const FullStudyPage = () => {
     const {groupName} = useParams();
@@ -62,13 +63,7 @@ const FullStudyPage = () => {
         <div className="container-full-study-page">
             <div className="group-info">
                 <h1>{groupInfo.groupName}</h1>
-                <div className="course-list">
-                    {groupInfo
-                        .courses
-                        .map((course, index) => (
-                            <div key={index} className="course-item">{course}</div>
-                        ))}
-                </div>
+                <CourseList courses={groupInfo.courses} />
                 <div className="time-list">
                     {groupInfo
                         .meetingTimes

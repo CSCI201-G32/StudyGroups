@@ -1,6 +1,8 @@
 import React from 'react';
-import DayTimeComp from '../../../../components/InputField/DayTimeComp';
-import '../../../../assets/study-group/StudyGroup.css';
+import DayTimeComp from '../../../components/InputField/DayTimeComp';
+import '../../../assets/study-group/StudyGroup.css';
+import CourseList from './CourseList';
+
 
 const StudyGroupForm = ({
     groupName,
@@ -9,6 +11,7 @@ const StudyGroupForm = ({
     onCourseInputChange,
     onAddCourse,
     newCourse,
+    removeCourse,
     meetingTimes,
     onAddMeetingTime,
     location,
@@ -99,18 +102,7 @@ const StudyGroupForm = ({
                     placeholder="Add Course"/>
                 <button type="button" onClick={onAddCourse}>Add</button>
             </div>
-            {/* List of added courses */}
-            <div
-                className="course-list"
-                style={{
-                display: courses.length === 0
-                    ? 'none'
-                    : 'block'
-            }}>
-                {courses.map((course, index) => (
-                    <div key={index} className="course-item">{course}</div>
-                ))}
-            </div>
+            <CourseList courses={courses} onRemoveCourse={removeCourse}/>
 
             <DayTimeComp meetingTimes={meetingTimes} onAddMeetingTime={onAddMeetingTime}/>
 

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import StudyGroupForm from '../components/StudyGroupForm/StudyGroupForm';
+import StudyGroupForm from '../components/StudyGroupForm';
 import {useNavigate} from 'react-router-dom';
 
 const CreateStudyGroupPage = () => {
@@ -47,6 +47,11 @@ const CreateStudyGroupPage = () => {
             ]);
             setNewCourse('');
         }
+    };
+
+    const handleRemoveCourse = (courseIndex) => {
+        const newCourses = courses.filter((_, index) => index !== courseIndex);
+        setCourses(newCourses);
     };
 
     const handleAddMeetingTime = (day, time) => {
@@ -102,6 +107,7 @@ const CreateStudyGroupPage = () => {
                 onCourseInputChange={handleCourseInputChange}
                 onAddCourse={handleAddCourse}
                 newCourse={newCourse}
+                removeCourse={handleRemoveCourse}
                 meetingTimes={meetingTimes}
                 onAddMeetingTime={handleAddMeetingTime}
                 location={location}

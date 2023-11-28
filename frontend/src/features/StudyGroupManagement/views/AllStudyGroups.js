@@ -4,6 +4,7 @@ import '../../../assets/study-group/FullStudyPage.css';
 import '../../../assets/study-group/AllStudyGroups.css';
 import StudyGroupWidget from '../components/StudyGroupWidget';
 import debounce from 'lodash.debounce';
+import CourseList from '../components/CourseList';
 
 const AllStudyGroups = () => {
     const [searchTerm,
@@ -55,6 +56,11 @@ const AllStudyGroups = () => {
             ]);
             setNewCourse('');
         }
+    };
+
+    const handleRemoveCourse = (courseIndex) => {
+        const newCourses = courses.filter((_, index) => index !== courseIndex);
+        setCourses(newCourses);
     };
 
     const handleDayChange = (day) => {
@@ -113,8 +119,13 @@ const AllStudyGroups = () => {
         }
 
         if (selectedDays && selectedDays.length > 0) {
-            formData.append("days", JSON.stringify(selectedDays));
-            console.log(JSON.stringify(selectedDays));
+            const meetingTimes = selectedDays.map(day => ({
+                day: day,
+                time: "12:00" // Dummy value for time
+            }));
+        
+            formData.append("meetingTimes", JSON.stringify(meetingTimes));
+            console.log(JSON.stringify(meetingTimes));
         }
 
         if(privacy && privacy !== "BOTH"){
@@ -189,17 +200,7 @@ const AllStudyGroups = () => {
                                     placeholder="Add Course"/>
                                 <button type="button" onClick={handleAddCourse}>Add</button>
                             </div>
-                            <div
-                                className="course-list"
-                                style={{
-                                display: courses.length === 0
-                                    ? 'none'
-                                    : 'block'
-                            }}>
-                                {courses.map((course, index) => (
-                                    <div key={index} className="course-item">{course}</div>
-                                ))}
-                            </div>
+                            <CourseList courses={courses} onRemoveCourse={handleRemoveCourse}/>
                         </div>
                         <div className="days">
                             <h3>Days:</h3>
