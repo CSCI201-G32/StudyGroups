@@ -2,11 +2,62 @@ import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import '../../../assets/study-group/FullStudyPage.css';
 import CourseList from '../components/CourseList';
+import {getCookie} from '../../../utils/utils';
 
 const FullStudyPage = () => {
     const {groupName} = useParams();
     const [groupInfo,
         setGroupInfo] = useState(null);
+
+    const currentUser = getCookie("UserID");
+
+    const handleJoin = () => {
+
+        joinStudyGroup(function (error, data) {
+            if (error) {
+                console.error("Error fetching data:", error);
+            } else {
+                fetchStudyGroup(groupInfo.groupName, function (error, data) {
+                    if (error) {
+                        console.error("Error fetching data:", error);
+                    } else {
+                        console.log("Received data after adding user:", data);
+                        setGroupInfo(data[0]); // Update the state with the fetched data
+                    }
+                });
+            }
+        });
+    }
+
+    function joinStudyGroup(callback) {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState === 4) {
+                if (this.status === 200) {
+                    try {
+                        var responseData = JSON.parse(this.responseText);
+                        callback(null, responseData);
+                    } catch (e) {
+                        callback(e, null);
+                    }
+                } else {
+                    callback(new Error("Request failed with status: " + this.status), null);
+                }
+            }
+        };
+
+        var url = "http://localhost:8080/ProjectTest/StudyGroupCreateServlet";
+
+        var formData = new URLSearchParams();
+        formData.append("groupName", groupInfo.groupName);
+        formData.append("addUser", currentUser);
+
+        xhttp.open("POST", url, true);
+
+        xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+        xhttp.send(formData.toString());
+    }
 
     function fetchStudyGroup(groupName, callback) {
         var xhttp = new XMLHttpRequest();
@@ -63,7 +114,7 @@ const FullStudyPage = () => {
         <div className="container-full-study-page">
             <div className="group-info">
                 <h1>{groupInfo.groupName}</h1>
-                <CourseList courses={groupInfo.courses} />
+                <CourseList courses={groupInfo.courses}/>
                 <div className="time-list">
                     {groupInfo
                         .meetingTimes
@@ -76,8 +127,21 @@ const FullStudyPage = () => {
             </div>
             <div className="sidebar">
                 <h2>Current Members</h2>
-
-                <button className="join">Join</button>
+                <ul>
+                    {groupInfo
+                        .users
+                        .map((user, index) => (
+                            <li key={index}>{user}</li>
+                        ))}
+                </ul>
+                <button
+                    className="join"
+                    onClick={handleJoin}
+                    style={{
+                    display: groupInfo.users.includes(parseInt(currentUser, 10))
+                        ? 'none'
+                        : 'block'
+                }}>Join</button>
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import StudyGroupForm from '../components/StudyGroupForm';
 import {useNavigate} from 'react-router-dom';
 import { getCookie } from '../../../utils/utils';
+import { useEffect } from 'react';
 
 const CreateStudyGroupPage = () => {
     const [groupName,
@@ -97,6 +98,15 @@ const CreateStudyGroupPage = () => {
             navigate(`/${studyGroupData.groupName}/view`);
         });
     };
+
+    useEffect(() => {
+        
+        if(getCookie("UserID") < 1){
+            alert("Login or Register to Create a Study Group!")
+            navigate("/");
+        }
+
+    }, []);
 
     return (
         <div>
