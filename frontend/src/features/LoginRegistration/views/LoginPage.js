@@ -23,6 +23,7 @@ function LoginPage() {
                         if (response !== "-1") {
                             // Handle successful login and use userID
                             console.log('Login successful. UserID:', response);
+                            document.cookie = "UserID=" + response;
                         } else {
                             // Handle scenario where userID is not available in response
                             console.error('UserID not found in the response');

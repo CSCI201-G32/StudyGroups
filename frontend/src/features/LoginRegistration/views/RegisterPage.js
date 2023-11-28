@@ -14,26 +14,35 @@ function RegisterPage() {
         event.preventDefault();
 
         try {
-            const response = await fetch('http://localhost:8080/StudyGroupsFinalProj_v2/Register', {
-                mode: 'no-cors',
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin':'*'
-                },
-                body: JSON.stringify({ fname, lname, major, email, password }),
-            });
-
-            if (response.ok) {
-                // Handle successful login
-                console.log('Registration successful');
-            } else {
-                // Handle login failure
-                console.error('Registration failed');
-            }
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://localhost:8080/StudyGroupsFinalProj_v2/Register', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+        
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+        
+                        if (response !== "-1") {
+                            // Handle successful login and use userID
+                            console.log('Login successful. UserID:', response);
+                            document.cookie = "UserID=" + response;
+                        } else {
+                            // Handle scenario where userID is not available in response
+                            console.error('UserID not found in the response');
+                        }
+                    } else {
+                        // Handle login failure
+                        console.error('Login failed:', xhr.status);
+                    }
+                }
+            };
+        
+            const requestBody = JSON.stringify({ fname, lname, major, email, password });
+            xhr.send(requestBody);
         } catch (error) {
             console.error('Error occurred:', error);
-        }
+        }    
     };
     return (
             <div className="register-container">
