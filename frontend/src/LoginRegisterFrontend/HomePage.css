@@ -14,12 +14,6 @@
     transition: background-color 0.3s;
 }
 
-h1 {
-    color: black; /* Black Text */
-    text-align: center;
-    font-family: "Lucida Console", "Courier New", monospace;
-}
-
 .button:hover {
     background-color: #bb2020; /* Color changes when hovered */
     opacity: 1; 

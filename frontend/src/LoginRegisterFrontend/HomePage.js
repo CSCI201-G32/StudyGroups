@@ -19,7 +19,6 @@ function HomePage() {
 
     return (
         <div>
-            <h1>Welcome Trojans</h1>
             <div className="welcome-container">
                 <button className="button" onClick={handleRegister}>Register</button>
             </div>
