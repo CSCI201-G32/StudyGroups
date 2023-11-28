@@ -20,20 +20,18 @@ function NavigationBar() {
     };
 
     return (
-        <header>
-            <div>
+        <div>
+            <div className='navigation-bar'>
                 <h1>StudyManager</h1>
-            </div>
-            <div>
+                <div className="icons-container">
                 {!isLoggedIn ? (
                     <>
                         <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
-                        {/* Following item should direct to the chat  */}
-                        {/* <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('/chat')} />  */}
+                        <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('/chat')} /> 
                         <FontAwesomeIcon icon={faUsers} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/:groupName/view')} />
                         <FontAwesomeIcon icon={faPlus} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/create')} />
                         <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/account')} />
-                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('Logout')} />
+                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
                     </>
                 ) : (
                     <>
@@ -42,8 +40,9 @@ function NavigationBar() {
                         <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
                     </>
                 )}
-            </div>
-        </header>
+                </div>
+                </div>
+        </div>
     );
     
 }

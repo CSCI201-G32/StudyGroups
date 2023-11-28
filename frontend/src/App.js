@@ -8,6 +8,7 @@ import RegisterPage from './features/LoginRegistration/views/RegisterPage';
 import LoginPage from './features/LoginRegistration/views/LoginPage'; 
 import GuestPage from './features/LoginRegistration/views/GuestPage'; 
 import AccountPage from './features/ProfileManagement/Account';
+import Chat from './features/Chat/Chat';
 
 function App() {
   return (
@@ -20,9 +21,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/guest" element={<GuestPage/>} />
         <Route path="/account" element={<AccountPage />} />
-        {/* <Route path="/chat" element={<chat />} /> */}
+        <Route path="/chat" element={<Chat />} />
       </Routes>
   );
 }
 
 export default App;
+
