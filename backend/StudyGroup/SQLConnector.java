@@ -21,44 +21,39 @@ public class SQLConnector {
 		return conn;
 	}
 	
-	public static int addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
+	
+	// Adds the user to the study group
+	public static void addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
 		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
 		int studyGroupID = -1;
 		try {
 			Connection connection = connect();
-			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, sg.getGroupName());
-			preparedStatement.executeUpdate();
 
-	        // Retrieve the generated key (study group ID)
-	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        
+	        ResultSet resultSet = preparedStatement.executeQuery();
 	        if (resultSet.next()) {
-	            studyGroupID = resultSet.getInt(1);
+	            studyGroupID = resultSet.getInt("group_id");
+	            System.out.println("Study group id: " + studyGroupID);
+	        } else {
+	        	System.out.println("no results");
 	        }
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
-			return -1;
 		}
 	    query = "INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (?, ?)";
 	    try {
 	        Connection conn = connect();
-	        PreparedStatement preparedStatement = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+	        PreparedStatement preparedStatement = conn.prepareStatement(query);
 	        preparedStatement.setInt(1, studyGroupID);
 	        preparedStatement.setString(2, userIDnum);
+	        
 
 	        preparedStatement.executeUpdate();
-
-	        // Retrieve the generated keys (user ID)
-	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
-	        int userID = -1;
-	        if (resultSet.next()) {
-	            userID = resultSet.getInt("user_id");
-	        }
-
-	        return userID;
-	    } catch (SQLException e) {
+	        
+	    } catch (Exception e) {
 	        System.out.println(e.getMessage());
-	        return -1; // Indicates failure
 	    }
 	}
 	
