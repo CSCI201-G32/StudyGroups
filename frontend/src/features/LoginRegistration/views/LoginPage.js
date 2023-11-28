@@ -1,9 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../../assets/login/LoginPage.css';
 
 function LoginPage() {
 
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -23,6 +25,7 @@ function LoginPage() {
                         if (response !== "-1") {
                             console.log('Registration successful. UserID:', response);
                             document.cookie = "UserID=" + response;
+                            navigate('/home');
                         } else {
                             console.error('Registration failed');
                         }
