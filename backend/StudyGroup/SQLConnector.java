@@ -21,28 +21,60 @@ public class SQLConnector {
 		return conn;
 	}
 	
-	
-	// Adds the user to the study group
-	public static void addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
+	// Helper function
+	private static int getStudyGroupID(String groupName) {
 		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
 		int studyGroupID = -1;
 		try {
 			Connection connection = connect();
 			PreparedStatement preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, sg.getGroupName());
+			preparedStatement.setString(1, groupName);
 
 	        
 	        ResultSet resultSet = preparedStatement.executeQuery();
 	        if (resultSet.next()) {
 	            studyGroupID = resultSet.getInt("group_id");
-	            System.out.println("Study group id: " + studyGroupID);
 	        } else {
-	        	System.out.println("no results");
+	        	System.out.println("No study groups found");
 	        }
+	        return studyGroupID;
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			return -1;
 		}
-	    query = "INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (?, ?)";
+	}
+	
+	// Gets all users of a study group
+	public static ArrayList<Integer> getUsersInStudyGroup(StudyGroup sg) {
+		ArrayList<Integer> users = new ArrayList<Integer>();
+		
+		int studyGroupID = getStudyGroupID(sg.getGroupName());
+		String query = "SELECT su.* FROM studygroups.studygroupusers su WHERE su.group_id = ?";
+		try {
+	        Connection conn = connect();
+	        PreparedStatement preparedStatement = conn.prepareStatement(query);
+	        preparedStatement.setInt(1, studyGroupID);
+	        
+
+	        ResultSet resultSet = preparedStatement.executeQuery();
+	        while (resultSet.next()) {
+	        	int userID = resultSet.getInt("user_id");
+	        	users.add(userID);
+	        }
+	        
+	        return users;
+	        
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	    }
+		return users;
+	}
+	
+	
+	// Adds the user to the study group
+	public static void addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
+		int studyGroupID = getStudyGroupID(sg.getGroupName());
+	    String query = "INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (?, ?)";
 	    try {
 	        Connection conn = connect();
 	        PreparedStatement preparedStatement = conn.prepareStatement(query);
@@ -156,7 +188,7 @@ public class SQLConnector {
 	}
 	
 	// Gets all of the study groups
-	public static ArrayList<StudyGroup> getAllStudyGroups() throws SQLException {
+	/*public static ArrayList<StudyGroup> getAllStudyGroups() throws SQLException {
 		String query = "SELECT sg.* FROM StudyGroups sg";
 		
 	     try {
@@ -206,7 +238,7 @@ public class SQLConnector {
 	    	 System.out.println(e.getMessage());
 	    	 return null;
 	     }
-	}
+	}*/
 	
 	
 
@@ -360,7 +392,10 @@ public class SQLConnector {
 	            	 meetingTimes.add(mt);
 	             }
 	             
+	             
 	             StudyGroup studyGroup = new StudyGroup(groupName, courses, meetingTimes, location, privacy, accessCode);
+	             ArrayList<Integer> users = getUsersInStudyGroup(studyGroup);
+	             studyGroup.setUsers(users);
 	             studyGroups.add(studyGroup);
 	         }
 	         return studyGroups;

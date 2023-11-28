@@ -1,4 +1,4 @@
-
+package StudyGroup;
 
 import java.util.ArrayList;
 
@@ -27,8 +27,18 @@ public class StudyGroup {
 	private String accessCode;
 	private String privacy;
 	private ArrayList<String> courses;
+	private ArrayList<Integer> users;
 	
-
+	public StudyGroup() {
+		groupName = null;
+		location = null;
+		meetingTimes = null;
+		accessCode = null;
+		privacy = null;
+		courses = null;
+		users = null;
+	}
+	
 	public StudyGroup(String groupName, ArrayList<String> courses, ArrayList<MeetingTime> meetingTimes, String location, String privacy, String accessCode) {
 		this.groupName = groupName;
 		this.courses = courses;
@@ -36,7 +46,16 @@ public class StudyGroup {
 		this.location = location;
 		this.privacy = privacy;
 		this.accessCode = accessCode;
-		
+	}
+	
+	public StudyGroup(String groupName, ArrayList<String> courses, ArrayList<MeetingTime> meetingTimes, String location, String privacy, String accessCode, ArrayList<Integer> users) {
+		this.groupName = groupName;
+		this.courses = courses;
+		this.meetingTimes = meetingTimes;
+		this.location = location;
+		this.privacy = privacy;
+		this.accessCode = accessCode;
+		this.users = users;
 	}
 	
 	public String getGroupName() {
@@ -61,5 +80,13 @@ public class StudyGroup {
 	
 	public ArrayList<String> getCourses() {
 		return courses;
+	}
+	
+	public void setUsers(ArrayList<Integer> users) {
+		this.users = users;
+	}
+	
+	public ArrayList<Integer> getUsers() {
+		return users;
 	}
 }

@@ -4,9 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,29 +42,20 @@ public class StudyGroupReturnServlet extends HttpServlet {
 	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		try {
 			
-	        if (groupName == null && location == null && privacy == null && courses == null && meetingTimes == null) {
-				// Returns all study groups if parameters are null
-	        	ArrayList<StudyGroup> studyGroups = SQLConnector.getAllStudyGroups();
-	        	
-				responseJSON = gson.toJson(studyGroups);
-				System.out.println(responseJSON);
-	        } else {
-				// Otherwise returns study group based on the parameters
-	        	ArrayList<String> coursesList = new ArrayList<>();
-	        	if (courses != null) {
-	        	    Collections.addAll(coursesList, courses);
-	        	}
+			ArrayList<String> coursesList = new ArrayList<>();
+        	if (courses != null) {
+        	    Collections.addAll(coursesList, courses);
+        	}
 
-	        	ArrayList<MeetingTime> meetingTimesList = new ArrayList<>();
-	        	if (meetingTimes != null) {
-	        	    Collections.addAll(meetingTimesList, meetingTimes);
-	        	}
-	        	StudyGroup parameters = new StudyGroup(groupName, coursesList, meetingTimesList, location, privacy, code);
-				ArrayList<StudyGroup> studyGroups = SQLConnector.getStudyGroup(parameters);
-				
-				responseJSON = gson.toJson(studyGroups);
-				System.out.println(responseJSON);
-	        }
+        	ArrayList<MeetingTime> meetingTimesList = new ArrayList<>();
+        	if (meetingTimes != null) {
+        	    Collections.addAll(meetingTimesList, meetingTimes);
+        	}
+        	StudyGroup parameters = new StudyGroup(groupName, coursesList, meetingTimesList, location, privacy, code);
+			ArrayList<StudyGroup> studyGroups = SQLConnector.getStudyGroup(parameters);
+			
+			responseJSON = gson.toJson(studyGroups);
+			System.out.println(responseJSON);
 	        writer.println(responseJSON);
 			writer.flush();
 			writer.close();
