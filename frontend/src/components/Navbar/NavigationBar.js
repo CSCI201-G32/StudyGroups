@@ -3,6 +3,7 @@ import '../../assets/NavigationBar.css';
 import { useNavigate } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faHome, faUsers, faUserCircle, faSignOutAlt, faComment, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { getCookie } from '../../utils/utils';
 
 
 function NavigationBar() {
@@ -11,8 +12,8 @@ function NavigationBar() {
 
     useEffect(() => {
         // Check if the user is logged in
-        const cookie = document.cookie.includes('first=');
-        setIsLoggedIn(cookie);
+        const cookie = getCookie("UserID");
+        setIsLoggedIn(cookie < 0);
     }, []);
 
     const handleNavigation = (path) => {
@@ -28,7 +29,6 @@ function NavigationBar() {
                     <>
                         <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
                         <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('/chat')} /> 
-                        <FontAwesomeIcon icon={faUsers} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/:groupName/view')} />
                         <FontAwesomeIcon icon={faPlus} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/create')} />
                         <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/account')} />
                         <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
