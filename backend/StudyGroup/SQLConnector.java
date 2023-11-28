@@ -22,8 +22,6 @@ public class SQLConnector {
 	}
 	
 	public static int addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
-
-		// Finds the study group based on its name
 		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
 		int studyGroupID = -1;
 		try {
@@ -220,21 +218,21 @@ public class SQLConnector {
 	// Finds the study groups in the SQL database based on the parameters provided and returns it as a StudyGroup object
 	 public static ArrayList<StudyGroup> getStudyGroup(StudyGroup sg) throws SQLException {
 		 
-		String query = "SELECT sg.* FROM StudyGroups sg";
+		String query = "SELECT sgs.* FROM StudyGroups sgs";
 		String filteredQuery = "";
 		
 		int numparams = 0;
-		String queryAdder = " WHERE ";
+		String whereString = " WHERE ";
 		String andString = " AND ";
 		boolean groupFilter = false, privacyFilter = false, coursesFilter = false, meetingFilter = false;
 		int groupPosition = -1, privacyPosition = -1, coursesPosition = -1, meetingPosition = -1;
 		
 		// Checks if group name is filtered for by the user
 		if (sg.getGroupName() != null) {
-			String groupQuery1 = "sg.group_name = ?";
+			String groupQuery1 = "sgs.group_name = ?";
 			
 			if (numparams == 0) {
-				filteredQuery += queryAdder;
+				filteredQuery += whereString;
 			} else {
 				filteredQuery += andString;
 			}
@@ -246,9 +244,9 @@ public class SQLConnector {
 		
 		// Checks if privacy is filtered for by the user
 		if (sg.getPrivacy() != null) {
-			String groupQuery2 = "sg.privacy = ?";
+			String groupQuery2 = "sgs.privacy = ?";
 			if (numparams == 0) {
-				filteredQuery += queryAdder;
+				filteredQuery += whereString;
 			} else {
 				filteredQuery += andString;
 			}
@@ -258,10 +256,17 @@ public class SQLConnector {
 			privacyPosition = numparams;
 		}
 		
+		
+		// 
 		// Checks if courses is filtered for by the user
 		if (sg.getCourses() != null && sg.getCourses().size() > 0) {
 			for (int i = 0; i < sg.getCourses().size(); i++) {
-				String query3 = " AND EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName = ?)";
+				String query3 = "EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName = ? AND sg.group_id = sgs.group_id)";
+				if (numparams == 0 && i == 0) {
+					query3 = whereString + query3;
+				} else {
+					query3 = andString + query3;
+				}
 				filteredQuery += query3;
 			}
 			numparams++;
@@ -272,7 +277,12 @@ public class SQLConnector {
 		// Checks if meeting times are filtered for by the user
 		if (sg.getMeetingTimes() != null && sg.getMeetingTimes().size() > 0) {
 			for (int i = 0; i < sg.getMeetingTimes().size(); i++) {
-				String query4 = " AND EXISTS ( SELECT 1 FROM studygroups.studygroupmeetings sm WHERE sg.group_id = sm.group_id AND sm.meeting_day = ?)";
+				String query4 = "EXISTS ( SELECT 1 FROM studygroups.studygroupmeetings sm WHERE sgs.group_id = sm.group_id AND sm.meeting_day = ?)";
+				if (numparams == 0 && i == 0) {
+					query4 = whereString + query4;
+				} else {
+					query4 = andString + query4;
+				}
 				filteredQuery += query4;
 			}
 			numparams++;
@@ -282,6 +292,8 @@ public class SQLConnector {
 		
 		// Adds the filters to the query
 		query += filteredQuery;
+		
+		System.out.println(query);
 	
 	     try {
 	    	  Connection connection = connect();
