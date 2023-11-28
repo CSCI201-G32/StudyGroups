@@ -48,7 +48,7 @@ const FullStudyPage = () => {
                 console.error("Error fetching data:", error);
             } else {
                 console.log("Received data:", data);
-                setGroupInfo(data); // Update the state with the fetched data
+                setGroupInfo(data[0]); // Update the state with the fetched data
             }
         });
 

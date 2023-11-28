@@ -1,16 +1,32 @@
 import React from 'react';
 import '../../../assets/StudyGroupWidget.css';
+import { useNavigate } from 'react-router-dom';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLock, faLockOpen } from '@fortawesome/free-solid-svg-icons';
+
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faLock, faLockOpen} from '@fortawesome/free-solid-svg-icons';
+import {faLocationDot} from '@fortawesome/free-solid-svg-icons';
 
 const StudyGroupWidget = ({name, courses, meetingTimes, location, privacy}) => {
     const isPrivate = typeof privacy === 'string' && privacy.toLowerCase() === 'private';
+    const navigate = useNavigate();
 
+    const handleClick = () => {
+        navigate(`/${name}/view`);
+    };
     return (
-        <div className="study-group-widget">
-            <p>{isPrivate ? <FontAwesomeIcon icon={faLock} /> : <FontAwesomeIcon icon={faLockOpen} />}{privacy}</p>
-            <h3>{name}</h3>
+        <div className="study-group-widget" onClick={handleClick}>
+            <div className="icon-text-combo">
+                {isPrivate
+                        ? <FontAwesomeIcon icon={faLock}/>
+                        : <FontAwesomeIcon icon={faLockOpen}/>}
+                <h3>{name}</h3>
+            </div>
+            <div className="icon-text-combo">
+                <FontAwesomeIcon icon={faLocationDot} />
+                <span>{location}</span>
+            </div>
+
             <ul>
                 {courses.map((course, index) => (
                     <li key={index}>{course}</li>
@@ -21,7 +37,7 @@ const StudyGroupWidget = ({name, courses, meetingTimes, location, privacy}) => {
                     <li key={index}>{`${meetingTime.day} at ${meetingTime.time}`}</li>
                 ))}
             </ul>
-            <p>{location}</p>
+            
         </div>
     );
 };
