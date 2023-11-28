@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
-import '../../../assets/FullStudyPage.css';
+import '../../../assets/study-group/FullStudyPage.css';
 
 const FullStudyPage = () => {
     const {groupName} = useParams();
@@ -48,7 +48,7 @@ const FullStudyPage = () => {
                 console.error("Error fetching data:", error);
             } else {
                 console.log("Received data:", data);
-                setGroupInfo(data); // Update the state with the fetched data
+                setGroupInfo(data[0]); // Update the state with the fetched data
             }
         });
 

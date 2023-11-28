@@ -21,6 +21,49 @@ public class SQLConnector {
 		return conn;
 	}
 	
+	public static int addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
+
+		// Finds the study group based on its name
+		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
+		int studyGroupID = -1;
+		try {
+			Connection connection = connect();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, sg.getGroupName());
+			preparedStatement.executeUpdate();
+
+	        // Retrieve the generated key (study group ID)
+	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        if (resultSet.next()) {
+	            studyGroupID = resultSet.getInt(1);
+	        }
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		}
+	    query = "INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (?, ?)";
+	    try {
+	        Connection conn = connect();
+	        PreparedStatement preparedStatement = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+	        preparedStatement.setInt(1, studyGroupID);
+	        preparedStatement.setString(2, userIDnum);
+
+	        preparedStatement.executeUpdate();
+
+	        // Retrieve the generated keys (user ID)
+	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        int userID = -1;
+	        if (resultSet.next()) {
+	            userID = resultSet.getInt("user_id");
+	        }
+
+	        return userID;
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        return -1; // Indicates failure
+	    }
+	}
+	
 	public static int insertStudyGroup(StudyGroup sg) throws SQLException {
 		System.out.println(sg.getGroupName());
 		System.out.println(sg.getLocation());
@@ -183,8 +226,8 @@ public class SQLConnector {
 		int numparams = 0;
 		String queryAdder = " WHERE ";
 		String andString = " AND ";
-		boolean groupFilter = false, privacyFilter = false;
-		int groupPosition = -1, privacyPosition = -1;
+		boolean groupFilter = false, privacyFilter = false, coursesFilter = false, meetingFilter = false;
+		int groupPosition = -1, privacyPosition = -1, coursesPosition = -1, meetingPosition = -1;
 		
 		// Checks if group name is filtered for by the user
 		if (sg.getGroupName() != null) {
@@ -215,11 +258,33 @@ public class SQLConnector {
 			privacyPosition = numparams;
 		}
 		
+		// Checks if courses is filtered for by the user
+		if (sg.getCourses() != null && sg.getCourses().size() > 0) {
+			for (int i = 0; i < sg.getCourses().size(); i++) {
+				String query3 = " AND EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName = ?)";
+				filteredQuery += query3;
+			}
+			numparams++;
+			coursesFilter = true;
+			coursesPosition = numparams;
+		}
+		
+		// Checks if meeting times are filtered for by the user
+		if (sg.getMeetingTimes() != null && sg.getMeetingTimes().size() > 0) {
+			for (int i = 0; i < sg.getMeetingTimes().size(); i++) {
+				String query4 = " AND EXISTS ( SELECT 1 FROM studygroups.studygroupmeetings sm WHERE sg.group_id = sm.group_id AND sm.meeting_day = ?)";
+				filteredQuery += query4;
+			}
+			numparams++;
+			meetingFilter = true;
+			meetingPosition = numparams;
+		}
+		
 		// Adds the filters to the query
 		query += filteredQuery;
 	
 	     try {
-	    	 Connection connection = connect();
+	    	  Connection connection = connect();
 		      PreparedStatement preparedStatement = connection.prepareStatement(query);
 		      
 		      if (groupFilter) {
@@ -230,9 +295,25 @@ public class SQLConnector {
 		    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
 		      }
 		      
+		      if (coursesFilter) {
+		    	  for (int i = 0; i < sg.getCourses().size(); i++) {
+		    		  preparedStatement.setString(coursesPosition, sg.getCourses().get(i));
+		    		  coursesPosition++;
+		    	  }
+		      }
+		      
+		      if (meetingFilter) {
+		    	  for (int i = 0; i < sg.getMeetingTimes().size(); i++) {
+		    		  preparedStatement.setString(meetingPosition, sg.getMeetingTimes().get(i).getDay());
+		    		  meetingPosition++;
+		    	  }
+		      }
+		      
 		      ResultSet resultSet = preparedStatement.executeQuery();
 		      
 		      ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+		      
+		      
 		      // Checks if there is a study group found with those parameters
 	         while (resultSet.next()) {
 	        	 String location = resultSet.getString("location");

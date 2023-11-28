@@ -24,7 +24,8 @@ const CreateStudyGroupPage = () => {
         const newValue = event
             .target
             .value
-            .replace(/\s/g, '');
+            .replace(/\s/g, '')
+            .substring(0, 20);
         setGroupName(newValue);
     };
 
@@ -33,7 +34,8 @@ const CreateStudyGroupPage = () => {
             .target
             .value
             .toUpperCase()
-            .replace(/\s/g, '');
+            .replace(/\s/g, '')
+            .substring(0, 10);
         setNewCourse(newValue);
     };
 
@@ -57,7 +59,11 @@ const CreateStudyGroupPage = () => {
     };
 
     const handleLocation = (event) => {
-        setLocation(event.target.value);
+        const newValue = event
+        .target
+        .value
+        .substring(0, 20);
+        setLocation(newValue);
     }
 
     const handlePrivacyChange = (privacy) => {

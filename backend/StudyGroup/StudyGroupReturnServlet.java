@@ -30,6 +30,7 @@ public class StudyGroupReturnServlet extends HttpServlet {
         String privacy = request.getParameter("privacy");
         String code = request.getParameter("code");
         
+        
         String[] courses = gson.fromJson(request.getParameter("courses"), String[].class);
         MeetingTime[] meetingTimes = gson.fromJson(request.getParameter("meetingTimes"), MeetingTime[].class);
         

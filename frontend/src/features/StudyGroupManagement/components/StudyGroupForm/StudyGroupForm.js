@@ -1,6 +1,6 @@
 import React from 'react';
 import DayTimeComp from '../../../../components/InputField/DayTimeComp';
-import '../../../../assets/StudyGroup.css';
+import '../../../../assets/study-group/StudyGroup.css';
 
 const StudyGroupForm = ({
     groupName,
@@ -28,7 +28,7 @@ const StudyGroupForm = ({
             if (this.readyState === 4) {
                 if (this.status === 200) {
                     try {
-                        console.log(this.responseText);
+                        console.log("from server:" + this.responseText);
                         var responseData = JSON.parse(this.responseText);
                         callback(null, responseData);
                     } catch (e) {
@@ -72,7 +72,7 @@ const StudyGroupForm = ({
             }
 
             // If the group name already exists
-            if (responseData) {
+            if (responseData.length > 0) {
                 alert("This group name already exists. Please choose a different name.");
             } else {
                 // Group name does not exist, proceed with the form submission
@@ -143,7 +143,7 @@ const StudyGroupForm = ({
             {privacy === 'PRIVATE' && (<input
                 type="text"
                 value={code}
-                onChange={(e) => setCode(e.target.value)}
+                onChange={(e) => setCode(e.target.value.substring(0, 6))}
                 placeholder="Enter Code"
                 required/>)}
 

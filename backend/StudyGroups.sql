@@ -113,6 +113,16 @@ CREATE TABLE StudyGroupCourses (
     PRIMARY KEY (group_id, course_id)
 );
 
+-- Creates a table for the users and study groups
+-- This is called to get the study groups that each user is a part of
+CREATE TABLE StudyGroupUsers (
+    group_id INT,
+    user_id INT,
+    FOREIGN KEY (group_id) REFERENCES StudyGroups(group_id),
+    FOREIGN KEY (user_id) REFERENCES StudentInfo(UserID),
+    PRIMARY KEY (group_id, user_id)
+);
+
 -- Insert sample study group
 INSERT INTO StudyGroups (group_name, location, privacy, access_code) VALUES ('TestGroupName', 'THH101', 'PRIVATE', '123456');
 
@@ -124,6 +134,8 @@ INSERT INTO StudyGroupCourses (group_ID, course_ID) VALUES (1, 2); -- Assuming t
 INSERT INTO StudyGroupMeetings (meeting_day, meeting_time, group_id) VALUES ('Mon', '20:10', '1'); -- Assuming the study group ID is 1 and the course ID is 1 and the meeting is Mon 20:10
 INSERT INTO StudyGroupMeetings (meeting_day, meeting_time, group_id) VALUES ('Wednesday', '21:10', '1'); -- Assuming the study group ID is 1 and the course ID is 2 and the meeting is Wed 21:10
 
+-- Add user with id=1 to study group with id=1
+INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (1, 1);
 
 /* Gets study groups 
 SELECT sg.* FROM studygroups.studygroups sg;

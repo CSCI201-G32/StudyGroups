@@ -1,6 +1,6 @@
 import React from 'react';
 import DayTimeSelection from './DayTimeSelection';
-import '../../assets/DayTime.css'; 
+import '../../assets/study-group/DayTime.css'; 
 
 const DayTimeComp = ({ meetingTimes, onAddMeetingTime }) => {
   return (

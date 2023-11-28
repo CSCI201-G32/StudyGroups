@@ -31,6 +31,7 @@ public class StudyGroupCreateServlet extends HttpServlet {
 	// Adds the study group to the database
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Gson gson = new Gson();
+		String addUser = request.getParameter("addUser");
 		String groupName = request.getParameter("groupName");
         String location = request.getParameter("location");
         String privacy = request.getParameter("privacy");
@@ -47,8 +48,14 @@ public class StudyGroupCreateServlet extends HttpServlet {
 	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
 	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		try {
-			int studyGroupID = SQLConnector.insertStudyGroup(sg);
-			writer.println(studyGroupID);
+			if (addUser != null) {
+				SQLConnector.addUserToStudyGroup(addUser, sg);
+			} else {
+				int studyGroupID = SQLConnector.insertStudyGroup(sg);
+				writer.println(studyGroupID);
+			}
+			writer.flush();
+			writer.close();
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
 		}

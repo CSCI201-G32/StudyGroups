@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DaySelection from "./DaySelection";
 import TimeSelection from "./TimeSelection";
-import '../../assets/DayTime.css'; 
+import '../../assets/study-group/DayTime.css'; 
 
 const DayTimeSelection = ({ onAddSelection }) => { 
   const [day, setDay] = useState('Mon');

@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
-import '../../../assets/FullStudyPage.css';
-import '../../../assets/AllStudyGroups.css';
+import '../../../assets/study-group/FullStudyPage.css';
+import '../../../assets/study-group/AllStudyGroups.css';
 import StudyGroupWidget from '../components/StudyGroupWidget';
+import debounce from 'lodash.debounce';
 
 const AllStudyGroups = () => {
     const [searchTerm,
@@ -11,15 +12,39 @@ const AllStudyGroups = () => {
         setNewCourse] = useState('');
     const [courses,
         setCourses] = useState([]);
-    const [queryResults, setQueryResults] = useState([]); 
+    const [selectedDays,
+        setSelectedDays] = useState({
+        Mon: false,
+        Tues: false,
+        Weds: false,
+        Thurs: false,
+        Fri: false,
+        Sat: false,
+        Sun: false
+    });
+    const [privacy,
+        setPrivacy] = useState('BOTH');
+    const [queryResults,
+        setQueryResults] = useState([]);
     const navigate = useNavigate();
 
     const handleSearchChange = (event) => {
-        setSearchTerm(event.target.value);
+        const newValue = event
+            .target
+            .value
+            .replace(/\s/g, '')
+            .substring(0, 20);
+        setSearchTerm(newValue);
     };
 
     const handleCourseInputChange = (event) => {
-        setNewCourse(event.target.value);
+        const newValue = event
+            .target
+            .value
+            .toUpperCase()
+            .replace(/\s/g, '')
+            .substring(0, 10);
+        setNewCourse(newValue);
     };
 
     const handleAddCourse = () => {
@@ -32,15 +57,70 @@ const AllStudyGroups = () => {
         }
     };
 
+    const handleDayChange = (day) => {
+        setSelectedDays(prevDays => ({
+            ...prevDays,
+            [day]: !prevDays[day]
+        }));
+    };
+
+    const handlePrivacyChange = (privacy) => {
+        setPrivacy(privacy);
+    };
+
     const handleCreateClick = () => {
         navigate('/create')
     };
 
-    function fetchStudyGroup(groupName, callback) {
+    const callbackFunction = (error, data) => {
+        if (error) {
+            console.error("Error fetching data:", error);
+        } else {
+            console.log("Fetched data:", data);
+
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                setQueryResults([data]);
+            } else {
+                setQueryResults(data);
+            }
+        }
+    };
+
+    const debouncedSearch = useCallback(
+        debounce(({ groupName, courses, selectedDays, privacy }) => {
+            fetchStudyGroup({ groupName, courses, selectedDays, privacy }, callbackFunction);
+        }, 200),
+        [] 
+    );
+    
+    
+    function fetchStudyGroup({
+        groupName,
+        courses,
+        selectedDays,
+        privacy
+    }, callback) {
         const url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
 
         const formData = new URLSearchParams();
-        //formData.append("groupName", groupName);
+
+        if (groupName) {
+            formData.append("groupName", groupName);
+        }
+
+        if (courses && courses.length > 0) {
+            formData.append("courses", JSON.stringify(courses));
+        }
+
+        if (selectedDays && selectedDays.length > 0) {
+            formData.append("days", JSON.stringify(selectedDays));
+            console.log(JSON.stringify(selectedDays));
+        }
+
+        if(privacy && privacy !== "BOTH"){
+            formData.append("privacy", privacy);
+        }
+
         const options = {
             method: 'POST',
             headers: {
@@ -49,6 +129,7 @@ const AllStudyGroups = () => {
             body: formData
         };
 
+        console.log(formData.toString());
         fetch(url, options).then(response => {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
@@ -59,29 +140,18 @@ const AllStudyGroups = () => {
             .catch(error => callback(error, null));
     }
 
+    // Fetch data when filter parameters are added
     useEffect(() => {
-        const groupName = "";
-    
-        fetchStudyGroup(groupName, function (error, data) {
-            if (error) {
-                console.error("Error fetching data:", error);
-            } else {
-                console.log(data);
-                // If data is an object, wrap it in an array
-                if (data && typeof data === 'object' && !Array.isArray(data)) {
-                    setQueryResults([data]); // Sets queryResults to an array containing the single object
-                } else {
-                    setQueryResults(data); // Assuming data is already an array
-                }
-            }
-        });
-    
-    }, []);
-    
 
-    useEffect(() => {
-        console.log("Updated queryResults:", queryResults);
-    }, [queryResults]); // This useEffect runs whenever queryResults changes
+    
+        debouncedSearch({
+            groupName: searchTerm,
+            courses,
+            selectedDays: Object.entries(selectedDays).filter(([day, isSelected]) => isSelected).map(([day]) => day),
+            privacy
+        });
+    }, [searchTerm, courses, selectedDays, privacy, debouncedSearch]);
+    
 
     return (
         <div className="container-all-study-groups">
@@ -134,38 +204,105 @@ const AllStudyGroups = () => {
                         <div className="days">
                             <h3>Days:</h3>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="monday" name="mon" value="Mon"/>
+                                <input
+                                    type="checkbox"
+                                    id="monday"
+                                    name="mon"
+                                    value="Mon"
+                                    checked={selectedDays.Mon}
+                                    onChange={() => handleDayChange('Mon')}/>
                                 <label htmlFor="mon">Mon</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="tuesday" name="tues" value="Tues"/>
+                                <input
+                                    type="checkbox"
+                                    id="tuesday"
+                                    name="tues"
+                                    value="Tues"
+                                    checked={selectedDays.Tues}
+                                    onChange={() => handleDayChange('Tues')}/>
                                 <label htmlFor="tues">Tues</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="wednesday" name="weds" value="Weds"/>
+                                <input
+                                    type="checkbox"
+                                    id="wednesday"
+                                    name="weds"
+                                    value="Weds"
+                                    checked={selectedDays.Weds}
+                                    onChange={() => handleDayChange('Weds')}/>
                                 <label htmlFor="weds">Weds</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="thursday" name="thurs" value="Thurs"/>
+                                <input
+                                    type="checkbox"
+                                    id="thursday"
+                                    name="thurs"
+                                    value="Thurs"
+                                    checked={selectedDays.Thurs}
+                                    onChange={() => handleDayChange('Thurs')}/>
                                 <label htmlFor="thurs">Thurs</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="friday" name="fri" value="Fri"/>
+                                <input
+                                    type="checkbox"
+                                    id="friday"
+                                    name="fri"
+                                    value="Fri"
+                                    checked={selectedDays.Fri}
+                                    onChange={() => handleDayChange('Fri')}/>
                                 <label htmlFor="fri">Fri</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="saturday" name="sat" value="Sat"/>
+                                <input
+                                    type="checkbox"
+                                    id="saturday"
+                                    name="sat"
+                                    value="Sat"
+                                    checked={selectedDays.Sat}
+                                    onChange={() => handleDayChange('Sat')}/>
                                 <label htmlFor="sat">Sat</label>
                             </div>
                             <div className="checkbox-wrapper">
-                                <input type="checkbox" id="sunday" name="sun" value="Sun"/>
+                                <input
+                                    type="checkbox"
+                                    id="sunday"
+                                    name="sun"
+                                    value="Sun"
+                                    checked={selectedDays.Sun}
+                                    onChange={() => handleDayChange('Sun')}/>
                                 <label htmlFor="sun">Sun</label>
                             </div>
+                        </div>
+                        <div className="privacy-buttons">
+                            <button
+                                type="button"
+                                onClick={() => handlePrivacyChange('PUBLIC')}
+                                className={privacy === 'PUBLIC'
+                                ? 'active'
+                                : ''}>
+                                Public
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handlePrivacyChange('PRIVATE')}
+                                className={privacy === 'PRIVATE'
+                                ? 'active'
+                                : ''}>
+                                Private
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => handlePrivacyChange('BOTH')}
+                                className={privacy === 'BOTH'
+                                ? 'active'
+                                : ''}>
+                                Both
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };

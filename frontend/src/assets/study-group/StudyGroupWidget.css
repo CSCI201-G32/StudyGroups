@@ -6,12 +6,27 @@
     padding: 20px;
     margin: 15px 0;
     border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    
+}
+
+.study-group-widget:hover{
+    cursor: pointer;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.icon-text-combo{
+    display: flex;
+    align-items: center;
+}
+
+.icon-text-combo > *{
+    padding-right: 10px;
+    padding-bottom: 5px;
 }
 
 .study-group-widget h3 {
     color: #990000; /* Cardinal color for the title */
-    margin-bottom: 10px;
+    margin: 0px;
 }
 
 .study-group-widget ul {
