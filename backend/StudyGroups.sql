@@ -10,7 +10,7 @@ the UserID, which will be the unique identifier
 for an account throughout our web app.*/
 
 CREATE TABLE StudentInfo (
-	UserID INT PRIMARY KEY,
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
     fname VARCHAR(40) NOT NULL,
     lname VARCHAR(40) NOT NULL,
     studentEmail VARCHAR(40) NOT NULL,
