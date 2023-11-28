@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import { Routes, Route} from "react-router-dom";
 import CreateStudyGroupPage from './features/StudyGroupManagement/views/CreateStudyGroupPage';
 import FullStudyPage from './features/StudyGroupManagement/views/FullStudyPage';
 import AllStudyGroups from './features/StudyGroupManagement/views/AllStudyGroups';
@@ -10,7 +10,6 @@ import GuestPage from './features/LoginRegistration/views/GuestPage'; // Your Gu
 
 function App() {
     return (
-        <Router>
             <Routes>
                 <Route path="/home" element={< AllStudyGroups />}/>
                 <Route path="/create" element={< CreateStudyGroupPage />}/>
@@ -20,7 +19,6 @@ function App() {
                 <Route path="/guest" element={< GuestPage />}/>
                 <Route path="/" element={< HomePage />}/>
             </Routes>
-        </Router>
     );
 }
 
