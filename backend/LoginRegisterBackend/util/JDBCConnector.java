@@ -214,5 +214,57 @@ public class JDBCConnector {
 		
 		return "";
 	}
+	
+	public static List<String> getUserInfo(Integer ID) throws ClassNotFoundException{
+		Connection conn = null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		List<String> result = new ArrayList<String>();
+		
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			
+			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
+			st.setInt(1,  ID);
+			rs = st.executeQuery();
+			
+			while(rs.next()) {
+				Integer userID = rs.getInt("UserID");
+				String first = rs.getString("fname");
+				String last = rs.getString("lname");
+				String studentEmail = rs.getString("studentEmail");
+				String major = rs.getString("studentMajor");
+				
+				
+				//for now just these items. Can edit to have them all if you'd like
+				result.add(first);
+				result.add(last);
+				
+			}
+			
+		}
+		catch (SQLException sqle) {
+			System.out.println(sqle.getMessage());
+		}
+		finally {
+			try {
+				if(st != null) {
+					st.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+				if(rs != null) {
+					rs.close();
+				}
+			}
+			catch(SQLException sqle) {
+				System.out.println(sqle.getMessage());
+			}
+		}
+		
+		return result;
+	}
 
 }
