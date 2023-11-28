@@ -229,7 +229,7 @@ public class SQLConnector {
 		
 		// Checks if group name is filtered for by the user
 		if (sg.getGroupName() != null) {
-			String groupQuery1 = "sgs.group_name = ?";
+			String groupQuery1 = "sgs.group_name LIKE ?";
 			
 			if (numparams == 0) {
 				filteredQuery += whereString;
@@ -293,14 +293,14 @@ public class SQLConnector {
 		// Adds the filters to the query
 		query += filteredQuery;
 		
-		System.out.println(query);
+		//System.out.println(query);
 	
 	     try {
 	    	  Connection connection = connect();
 		      PreparedStatement preparedStatement = connection.prepareStatement(query);
 		      
 		      if (groupFilter) {
-		    	  preparedStatement.setString(groupPosition, sg.getGroupName());
+		    	  preparedStatement.setString(groupPosition, sg.getGroupName()+"%");
 		      }
 		      
 		      if (privacyFilter) {
