@@ -48,12 +48,11 @@ public class StudyGroupCreateServlet extends HttpServlet {
 	    response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
 	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		try {
+			int studyGroupID = SQLConnector.insertStudyGroup(sg);
 			if (addUser != null) {
 				SQLConnector.addUserToStudyGroup(addUser, sg);
-			} else {
-				int studyGroupID = SQLConnector.insertStudyGroup(sg);
-				writer.println(studyGroupID);
 			}
+			writer.println(studyGroupID);
 			writer.flush();
 			writer.close();
 		} catch (SQLException e) {
