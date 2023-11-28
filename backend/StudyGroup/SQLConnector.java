@@ -217,7 +217,7 @@ public class SQLConnector {
 		
 		// Checks if courses is filtered for by the user
 		if (sg.getCourses() != null) {
-			String query3a = " UNION SELECT sg.group_id FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName IN ";
+			String query3a = " UNION SELECT sg.* FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName IN ";
 			String query3b = "(";
 			int i = 0;
 			for (i = 0; i < sg.getCourses().size(); i++) {
