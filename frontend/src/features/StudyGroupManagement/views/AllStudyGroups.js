@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {useNavigate} from 'react-router-dom';
 import '../../../assets/study-group/FullStudyPage.css';
 import '../../../assets/study-group/AllStudyGroups.css';
@@ -23,7 +23,7 @@ const AllStudyGroups = () => {
         Sun: false
     });
     const [privacy,
-        setPrivacy] = useState('PUBLIC');
+        setPrivacy] = useState('BOTH');
     const [queryResults,
         setQueryResults] = useState([]);
     const navigate = useNavigate();
@@ -72,6 +72,28 @@ const AllStudyGroups = () => {
         navigate('/create')
     };
 
+    const callbackFunction = (error, data) => {
+        if (error) {
+            console.error("Error fetching data:", error);
+        } else {
+            console.log("Fetched data:", data);
+
+            if (data && typeof data === 'object' && !Array.isArray(data)) {
+                setQueryResults([data]);
+            } else {
+                setQueryResults(data);
+            }
+        }
+    };
+
+    const debouncedSearch = useCallback(
+        debounce(({ groupName, courses, selectedDays, privacy }) => {
+            fetchStudyGroup({ groupName, courses, selectedDays, privacy }, callbackFunction);
+        }, 200),
+        [] 
+    );
+    
+    
     function fetchStudyGroup({
         groupName,
         courses,
@@ -95,7 +117,7 @@ const AllStudyGroups = () => {
             console.log(JSON.stringify(selectedDays));
         }
 
-        if(privacy && privacy != "BOTH"){
+        if(privacy && privacy !== "BOTH"){
             formData.append("privacy", privacy);
         }
 
@@ -118,48 +140,18 @@ const AllStudyGroups = () => {
             .catch(error => callback(error, null));
     }
 
-    useEffect(() => {
-        const callbackFunction = (error, data) => {
-            if (error) {
-                console.error("Error fetching data:", error);
-            } else {
-                console.log("Fetched data:", data);
-
-                if (data && typeof data === 'object' && !Array.isArray(data)) {
-                    setQueryResults([data]);
-                } else {
-                    setQueryResults(data);
-                }
-            }
-        };
-
-        // Fetch all study groups on first load.
-        fetchStudyGroup({}, callbackFunction);
-    }, []);
-
     // Fetch data when filter parameters are added
     useEffect(() => {
-        const callbackFunction = (error, data) => {
-            if (error) {
-                console.error("Error fetching data:", error);
-            } else {
-                console.log("Fetched data:", data);
 
-                if (data && typeof data === 'object' && !Array.isArray(data)) {
-                    setQueryResults([data]);
-                } else {
-                    setQueryResults(data);
-                }
-            }
-        };
-
-        fetchStudyGroup({
+    
+        debouncedSearch({
             groupName: searchTerm,
             courses,
-            selectedDays,
+            selectedDays: Object.entries(selectedDays).filter(([day, isSelected]) => isSelected).map(([day]) => day),
             privacy
-        }, callbackFunction);
-    }, [searchTerm, courses, selectedDays, privacy]);
+        });
+    }, [searchTerm, courses, selectedDays, privacy, debouncedSearch]);
+    
 
     return (
         <div className="container-all-study-groups">
