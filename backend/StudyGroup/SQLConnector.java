@@ -183,8 +183,8 @@ public class SQLConnector {
 		int numparams = 0;
 		String queryAdder = " WHERE ";
 		String andString = " AND ";
-		boolean groupFilter = false, privacyFilter = false, coursesFilter = false;
-		int groupPosition = -1, privacyPosition = -1, coursesPosition = -1;
+		boolean groupFilter = false, privacyFilter = false, coursesFilter = false, meetingFilter = false;
+		int groupPosition = -1, privacyPosition = -1, coursesPosition = -1, meetingPosition = -1;
 		
 		// Checks if group name is filtered for by the user
 		if (sg.getGroupName() != null) {
@@ -216,22 +216,25 @@ public class SQLConnector {
 		}
 		
 		// Checks if courses is filtered for by the user
-		if (sg.getCourses() != null) {
-			String query3a = " UNION SELECT sg.* FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName IN ";
-			String query3b = "(";
-			int i = 0;
-			for (i = 0; i < sg.getCourses().size(); i++) {
-				if (i != sg.getCourses().size()-1) {
-					query3b += "?, ";
-				} else {
-					query3b += "?) ";
-				}
+		if (sg.getCourses() != null && sg.getCourses().size() > 0) {
+			for (int i = 0; i < sg.getCourses().size(); i++) {
+				String query3 = " AND EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName = ?)";
+				filteredQuery += query3;
 			}
-			String query3c = "GROUP BY sg.group_id HAVING COUNT(DISTINCT c.CourseName) = " + Integer.toString(i);
-			filteredQuery += query3a + query3b + query3c;
 			numparams++;
 			coursesFilter = true;
 			coursesPosition = numparams;
+		}
+		
+		// Checks if meeting times are filtered for by the user
+		if (sg.getMeetingTimes() != null && sg.getMeetingTimes().size() > 0) {
+			for (int i = 0; i < sg.getMeetingTimes().size(); i++) {
+				String query4 = " AND EXISTS ( SELECT 1 FROM studygroups.studygroupmeetings sm WHERE sg.group_id = sm.group_id AND sm.meeting_day = ?)";
+				filteredQuery += query4;
+			}
+			numparams++;
+			meetingFilter = true;
+			meetingPosition = numparams;
 		}
 		
 		// Adds the filters to the query
@@ -253,6 +256,13 @@ public class SQLConnector {
 		    	  for (int i = 0; i < sg.getCourses().size(); i++) {
 		    		  preparedStatement.setString(coursesPosition, sg.getCourses().get(i));
 		    		  coursesPosition++;
+		    	  }
+		      }
+		      
+		      if (meetingFilter) {
+		    	  for (int i = 0; i < sg.getMeetingTimes().size(); i++) {
+		    		  preparedStatement.setString(meetingPosition, sg.getMeetingTimes().get(i).getDay());
+		    		  meetingPosition++;
 		    	  }
 		      }
 		      
