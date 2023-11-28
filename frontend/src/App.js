@@ -25,4 +25,4 @@ function App() {
       </Routes>
     </Router>
   );
-  }
+}
