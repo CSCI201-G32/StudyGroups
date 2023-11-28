@@ -1,0 +1,12 @@
+.searchbox {
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+}
+#searchtext {
+    width: 750px;
+}
+#search {
+    background-color: darkred;
+    color: white;
+}

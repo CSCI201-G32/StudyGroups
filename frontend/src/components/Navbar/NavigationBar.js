@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../../assets/NavigationBar.css';
 import { useNavigate } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import { faHome, faUsers, faUserCircle, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHome, faUsers, faUserCircle, faSignOutAlt, faComment, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function NavigationBar() {
@@ -25,17 +25,21 @@ function NavigationBar() {
                 <h1>StudyManager</h1>
             </div>
             <div>
-                {isLoggedIn ? (
+                {!isLoggedIn ? (
                     <>
-                        <FontAwesomeIcon icon={faHome} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => navigate('/home')} />
-                        <FontAwesomeIcon icon={faUsers} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => handleNavigation('/:groupName/view')} />
-                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => handleNavigation('Logout')} />
+                        <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
+                        {/* Following item should direct to the chat  */}
+                        <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('')} /> 
+                        <FontAwesomeIcon icon={faUsers} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
+                        <FontAwesomeIcon icon={faPlus} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/create')} />
+                        <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/account')} />
+                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('Logout')} />
                     </>
                 ) : (
                     <>
-                        <FontAwesomeIcon icon={faHome} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => handleNavigation('/home')} />
-                        <FontAwesomeIcon icon={faUsers} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => handleNavigation('/create')} />
-                        <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '30px', margin: '0 5px' }} onClick={() => handleNavigation('/reg')} />
+                        <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
+                        <FontAwesomeIcon icon={faUsers} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/create')} />
+                        <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/register')} />
                     </>
                 )}
             </div>

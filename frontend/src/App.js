@@ -7,6 +7,7 @@ import HomePage from './features/LoginRegistration/views/HomePage';
 import RegisterPage from './features/LoginRegistration/views/RegisterPage'; 
 import LoginPage from './features/LoginRegistration/views/LoginPage'; 
 import GuestPage from './features/LoginRegistration/views/GuestPage'; 
+import AccountPage from './features/ProfileManagement/Account';
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
         <Route path="/home" element={<AllStudyGroups />} />
         <Route path="/create" element={<CreateStudyGroupPage />} />
         <Route path="/:groupName/view" element={<FullStudyPage />} />
-        <Route path="/reg" element={<HomePage />} />
+        <Route path="/register" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/guest" element={<GuestPage />} />
+        <Route path="/account" element={<AccountPage />} />
       </Routes>
   );
 }
