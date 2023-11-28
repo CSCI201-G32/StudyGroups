@@ -24,16 +24,13 @@ function RegisterPage() {
                         const response = JSON.parse(xhr.responseText);
         
                         if (response !== "-1") {
-                            // Handle successful login and use userID
                             console.log('Login successful. UserID:', response);
                             document.cookie = "UserID=" + response;
                         } else {
-                            // Handle scenario where userID is not available in response
-                            console.error('UserID not found in the response');
+                            console.error('Login failed');
                         }
                     } else {
-                        // Handle login failure
-                        console.error('Login failed:', xhr.status);
+                        console.error('Registration failed', xhr.status);
                     }
                 }
             };

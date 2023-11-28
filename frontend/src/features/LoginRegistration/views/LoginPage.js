@@ -21,16 +21,13 @@ function LoginPage() {
                         const response = JSON.parse(xhr.responseText);
         
                         if (response !== "-1") {
-                            // Handle successful login and use userID
-                            console.log('Login successful. UserID:', response);
+                            console.log('Registration successful. UserID:', response);
                             document.cookie = "UserID=" + response;
                         } else {
-                            // Handle scenario where userID is not available in response
-                            console.error('UserID not found in the response');
+                            console.error('Registration failed');
                         }
                     } else {
-                        // Handle login failure
-                        console.error('Login failed:', xhr.status);
+                        console.error('Request failed:', xhr.status);
                     }
                 }
             };
