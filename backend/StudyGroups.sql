@@ -114,7 +114,7 @@ CREATE TABLE StudyGroupCourses (
 );
 
 -- Insert sample study group
-INSERT INTO StudyGroups (group_name, location, privacy, access_code) VALUES ('Test Group Name', 'THH101', 'PRIVATE', '123456');
+INSERT INTO StudyGroups (group_name, location, privacy, access_code) VALUES ('TestGroupName', 'THH101', 'PRIVATE', '123456');
 
 -- Associate courses with the study group
 INSERT INTO StudyGroupCourses (group_ID, course_ID) VALUES (1, 1); -- Assuming the study group ID is 1 and CS201 ID is 1

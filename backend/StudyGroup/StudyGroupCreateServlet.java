@@ -1,4 +1,3 @@
-package StudyGroup;
 
 import java.util.ArrayList;
 

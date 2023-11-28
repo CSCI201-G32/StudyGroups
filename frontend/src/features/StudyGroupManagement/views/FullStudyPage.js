@@ -59,7 +59,7 @@ const FullStudyPage = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container-full-study-page">
             <div className="group-info">
                 <h1>{groupInfo.groupName}</h1>
                 <div className="course-list">

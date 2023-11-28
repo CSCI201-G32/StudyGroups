@@ -7,13 +7,14 @@ body {
     box-sizing: border-box;
 }
 
-.container {
+.container-full-study-page {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    flex-direction: row;
 }
 
 /* Header Styles */
@@ -26,7 +27,7 @@ h1 {
 
 /* Group Info Styles */
 .group-info {
-    width: 70%;
+    flex: 2;
     background-color: #f2f2f2; /* Light gray background */
     padding: 20px;
     border: 1px solid #ddd; /* subtle border */
@@ -61,7 +62,7 @@ h1 {
 
 /* Sidebar Styles */
 .sidebar {
-    width: 30%;
+    flex: 1;
     background-color: #fff;
     border: 1px solid #ddd;
     padding: 20px;

@@ -1,0 +1,37 @@
+/* StudyGroupWidget.css */
+
+.study-group-widget {
+    background-color: #fff; /* White background */
+    border: 2px solid #990000; /* Cardinal border */
+    padding: 20px;
+    margin: 15px 0;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.study-group-widget h3 {
+    color: #990000; /* Cardinal color for the title */
+    margin-bottom: 10px;
+}
+
+.study-group-widget ul {
+    list-style-type: none;
+    padding: 0;
+    margin-bottom: 10px;
+    display: flex; /* Flex display to align items horizontally */
+    flex-wrap: wrap; /* Allows items to wrap to the next line */
+    gap: 10px; /* Adds space between items */
+}
+
+.study-group-widget ul li {
+    background-color: #ffc72c; /* Gold background for list items */
+    color: #fff; /* White text */
+    padding: 5px 10px;
+    border-radius: 5px;
+    flex: 0 0 auto; /* Flexible sizing but doesn't grow or shrink */
+}
+
+.study-group-widget p {
+    color: #333; /* Dark text for regular paragraphs */
+    margin-bottom: 5px;
+}

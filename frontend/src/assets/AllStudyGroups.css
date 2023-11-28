@@ -1,0 +1,131 @@
+/* AllStudyGroups.css */
+.container-all-study-groups {
+    max-width: 80vw;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #990000; /* USC Cardinal */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-bar > button {
+    background-color: #FFCC00; /* USC Gold */
+    color: #990000; /* USC Cardinal */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.search-bar > button:hover {
+    background-color: #e6b800; /* Darker gold */
+}
+
+.search-bar > input {
+    border: 1px solid #990000; /* USC Cardinal */
+    padding: 10px;
+    border-radius: 4px;
+    flex: 4;
+}
+
+.info{
+    width: 100%;
+}
+
+.info-filter{
+    display: flex;
+    gap: 30px;
+    flex-direction: row;
+    width: 100%;
+}
+
+.filter-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    flex: 1;
+}
+
+.filter-menu h2 {
+    color: #990000; /* USC Cardinal */
+}
+
+h3{
+    margin: 8px;
+}
+
+.filter-menu .days input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.filter-menu .days label {
+    font-weight: bold;
+    color: #333;
+}
+
+.checkbox-wrapper{
+    display: inline-block;
+    margin-right: 15px;
+    white-space: nowrap;
+}
+
+.study-group-views {
+    display: flex;
+    flex-direction: column;
+    flex: 3;
+    margin-bottom: 20px;
+}
+
+.study-group-views .study-group {
+    background-color: #f2f2f2; /* Light gray */
+    padding: 20px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.study-group-views .study-group .course-item {
+    background-color: #990000; /* USC Cardinal */
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 15px; /* Rounded edges for course tags */
+    margin-right: 5px; /* Space between courses */
+}
+
+.study-group-views .study-group .view-button {
+    background-color: #FFCC00; /* USC Gold */
+    color: #990000; /* USC Cardinal */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.study-group-views .study-group .view-button:hover {
+    background-color: #e6b800; /* Darker gold */
+}
+
+/* Add additional styles as needed */

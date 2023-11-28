@@ -79,6 +79,7 @@ const CreateStudyGroupPage = () => {
                 : undefined
         };
 
+        
         console.log(JSON.stringify(studyGroupData, null, 2));
         sendDataToBackend(studyGroupData, () => {
             navigate(`/${studyGroupData.groupName}/view`);

@@ -28,6 +28,7 @@ const StudyGroupForm = ({
             if (this.readyState === 4) {
                 if (this.status === 200) {
                     try {
+                        console.log(this.responseText);
                         var responseData = JSON.parse(this.responseText);
                         callback(null, responseData);
                     } catch (e) {

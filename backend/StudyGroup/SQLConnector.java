@@ -1,4 +1,3 @@
-package StudyGroup;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -144,24 +143,24 @@ public class SQLConnector {
 	             
 	             preparedStatement = connection.prepareStatement(query);
 	             preparedStatement.setString(1, groupName);
-	             resultSet = preparedStatement.executeQuery();
-	             
-	             while (resultSet.next()) {
-	            	 String course = resultSet.getString("CourseName");
-	            	 courses.add(course);
-	             }
+	             ResultSet resultSet2 = preparedStatement.executeQuery();
+
+                 while (resultSet2.next()) {
+                     String course = resultSet2.getString("CourseName");
+                     courses.add(course);
+                 }
 	             
 	             // Finds the meeting times and adds them to the study group
 	             query = "SELECT sm.* FROM studygroups.studygroupmeetings sm JOIN studygroups.studygroups sg ON sm.group_id = sg.group_id WHERE sg.group_name = ?";
 	             preparedStatement = connection.prepareStatement(query);
 	             preparedStatement.setString(1, groupName);
-	             resultSet = preparedStatement.executeQuery();
-	             while (resultSet.next()) {
-	            	 String day = resultSet.getString("meeting_day");
-	            	 String time = resultSet.getString("meeting_time");
-	            	 MeetingTime mt = new MeetingTime(day, time);
-	            	 meetingTimes.add(mt);
-	             }
+	             ResultSet resultSet3 = preparedStatement.executeQuery();
+                 while (resultSet3.next()) {
+                     String day = resultSet3.getString("meeting_day");
+                     String time = resultSet3.getString("meeting_time");
+                     MeetingTime mt = new MeetingTime(day, time);
+                     meetingTimes.add(mt);
+                }
 	             
 	             StudyGroup studyGroup = new StudyGroup(groupName, courses, meetingTimes, location, privacy, accessCode);
 	             studyGroups.add(studyGroup);
