@@ -4,10 +4,12 @@ import './assets/index.css';
 import App from './App';
 import reportWebVitals from './utils/reportWebVitals';
 import { HashRouter as Router } from "react-router-dom";
+import NavigationBar from './components/Navbar/NavigationBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
+      <NavigationBar />
       <App />
     </Router>
 );
