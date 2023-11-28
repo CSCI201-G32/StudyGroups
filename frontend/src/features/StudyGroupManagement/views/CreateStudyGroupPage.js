@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import StudyGroupForm from '../components/StudyGroupForm';
 import {useNavigate} from 'react-router-dom';
+import { getCookie } from '../../../utils/utils';
 
 const CreateStudyGroupPage = () => {
     const [groupName,
@@ -142,7 +143,9 @@ function sendDataToBackend(studyGroupData, onSuccess) {
     formData.append("code", studyGroupData.code || ""); // handle optional code
     formData.append("courses", JSON.stringify(studyGroupData.courses));
     formData.append("meetingTimes", JSON.stringify(studyGroupData.meetingTimes));
+    formData.append("addUser", getCookie("UserID"));
 
+    console.log(formData.toString());
     xhttp.open("POST", url, true);
 
     // Set Content-Type for form data

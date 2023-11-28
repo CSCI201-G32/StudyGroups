@@ -16,7 +16,6 @@ function App() {
         <Route path="/home" element={<AllStudyGroups />} />
         <Route path="/create" element={<CreateStudyGroupPage />} />
         <Route path="/:groupName/view" element={<FullStudyPage />} />
-        <Route path="/register" element={<HomePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/guest" element={<GuestPage />} />
