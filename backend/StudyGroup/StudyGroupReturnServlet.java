@@ -1,4 +1,4 @@
-
+package StudyGroup;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,9 +61,9 @@ public class StudyGroupReturnServlet extends HttpServlet {
 	        	    Collections.addAll(meetingTimesList, meetingTimes);
 	        	}
 	        	StudyGroup parameters = new StudyGroup(groupName, coursesList, meetingTimesList, location, privacy, code);
-				StudyGroup sg = SQLConnector.getStudyGroup(parameters);
+				ArrayList<StudyGroup> studyGroups = SQLConnector.getStudyGroup(parameters);
 				
-				responseJSON = gson.toJson(sg);
+				responseJSON = gson.toJson(studyGroups);
 				System.out.println(responseJSON);
 	        }
 	        writer.println(responseJSON);

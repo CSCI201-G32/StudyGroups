@@ -1,4 +1,4 @@
-
+package StudyGroup;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -174,8 +174,8 @@ public class SQLConnector {
 	
 	
 
-	// Finds the study group in the SQL database based on the parameters provided and returns it as a StudyGroup object
-	 public static StudyGroup getStudyGroup(StudyGroup sg) throws SQLException {
+	// Finds the study groups in the SQL database based on the parameters provided and returns it as a StudyGroup object
+	 public static ArrayList<StudyGroup> getStudyGroup(StudyGroup sg) throws SQLException {
 		 
 		String query = "SELECT sg.* FROM StudyGroups sg";
 		String filteredQuery = "";
@@ -231,68 +231,55 @@ public class SQLConnector {
 		      }
 		      
 		      ResultSet resultSet = preparedStatement.executeQuery();
-	         if (resultSet.next()) {
+		      
+		      ArrayList<StudyGroup> studyGroups = new ArrayList<StudyGroup>();
+		      // Checks if there is a study group found with those parameters
+	         while (resultSet.next()) {
 	        	 String location = resultSet.getString("location");
 	        	 String privacy = resultSet.getString("privacy");
 	        	 String accessCode = resultSet.getString("access_code");
-	             String groupName = resultSet.getString("group_name");
+	        	 String groupName = resultSet.getString("group_name");
+	        	 String groupID = resultSet.getString("group_id");
 	
 	             ArrayList<String> courses = new ArrayList<String>();
 	             ArrayList<MeetingTime> meetingTimes = new ArrayList<MeetingTime>();
 	             
 	             
 	             // Finds the courses and adds them to the study group
-	             query = "SELECT sg.group_id, c.CourseName FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID";
-	             query += filteredQuery;
-	             
+	             query = "SELECT sg.group_id, c.CourseName FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE sg.group_id = ?";
 	             preparedStatement = connection.prepareStatement(query);
-	             
-	             // Assigns the filters based on their positions
-	              if (groupFilter) {
-			    	  preparedStatement.setString(groupPosition, sg.getGroupName());
-			      }
+	             preparedStatement.setString(1, groupID);
 			      
-			      if (privacyFilter) {
-			    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
-			      }
-			      
-	             resultSet = preparedStatement.executeQuery();
 	             
-	             while (resultSet.next()) {
-	            	 String course = resultSet.getString("CourseName");
+	             ResultSet resultSet2 = preparedStatement.executeQuery();
+	             
+	             while (resultSet2.next()) {
+	            	 String course = resultSet2.getString("CourseName");
 	            	 courses.add(course);
 	             }
 	             
 	             // Finds the meeting times and adds them to the study group
-	             query = "SELECT sm.* FROM studygroups.studygroupmeetings sm JOIN studygroups.studygroups sg ON sm.group_id = sg.group_id";
-	             query += filteredQuery;
+	             query = "SELECT sm.* FROM studygroups.studygroupmeetings sm JOIN studygroups.studygroups sg ON sm.group_id = sg.group_id WHERE sg.group_id = ?";
 	             preparedStatement = connection.prepareStatement(query);
+	             preparedStatement.setString(1, groupID);
 	             
-				 // Assigns the filters based on their positions
-	             if (groupFilter) {
-			    	  preparedStatement.setString(groupPosition, sg.getGroupName());
-			      }
 			      
-			      if (privacyFilter) {
-			    	  preparedStatement.setString(privacyPosition, sg.getPrivacy());
-			      }
-			      
-	             resultSet = preparedStatement.executeQuery();
-	             while (resultSet.next()) {
-	            	 String day = resultSet.getString("meeting_day");
-	            	 String time = resultSet.getString("meeting_time");
+	             ResultSet resultSet3 = preparedStatement.executeQuery();
+	             while (resultSet3.next()) {
+	            	 String day = resultSet3.getString("meeting_day");
+	            	 String time = resultSet3.getString("meeting_time");
 	            	 MeetingTime mt = new MeetingTime(day, time);
 	            	 meetingTimes.add(mt);
 	             }
 	             
 	             StudyGroup studyGroup = new StudyGroup(groupName, courses, meetingTimes, location, privacy, accessCode);
-	             return studyGroup;
+	             studyGroups.add(studyGroup);
 	         }
+	         return studyGroups;
 	     } catch (SQLException e) {
 	    	 System.out.println(e.getMessage());
 	    	 return null;
 	     }
-	     return null; // Indicates no study group found
 	 }
 }
 	
