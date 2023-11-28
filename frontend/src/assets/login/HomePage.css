@@ -1,7 +1,3 @@
-.welcome-container {
-    text-align: center;
-    margin-top: 10vh; /* 33% of the viewport height */
-}
 
 .button {
     padding: 10px;
@@ -23,3 +19,46 @@ body {
     background-color: #f0f0f0; /* Grey Color */
 }
 
+.auth-box {
+    text-align: center;
+    padding: 20px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+
+    width: 400px; /* Width of the box */
+    height: 50; /* Height adjusts based on content */
+    max-width: 100%; /* Ensure it doesn't overflow on small screens */
+    margin: 50px auto; /* Centering the box horizontally */
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tab-container {
+    display: flex;
+    margin-bottom: 0px;
+}
+
+.tab-button {
+    border: none;
+    cursor: pointer;
+    padding: 10px 10px;
+    margin: 0 0px;
+}
+
+
+.tab-button.active {
+    color: white;
+}
+
+/* Style for guest link at the bottom */
+.guest-link {
+    position: absolute;
+    bottom: 30px; 
+    color: #990000; 
+    position: relative; 
+    text-decoration: none;
+}
+
+.guest-link:hover {
+    text-decoration: underline;
+}

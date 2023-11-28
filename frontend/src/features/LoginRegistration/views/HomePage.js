@@ -1,16 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../../../assets/login/HomePage.css';
 import { useNavigate } from 'react-router-dom';
+import LoginPage from './LoginPage'; // Adjust the path based on your project structure
+import RegisterPage from './RegisterPage'; // Adjust the path based on your project structure
 
 function HomePage() {
+    const [activeTab, setActiveTab] = useState('login');
     const navigate = useNavigate();
 
-    const handleRegister = () => {
-        navigate('/register');
-    };
-
-    const handleLogin = () => {
-        navigate('/login');
+    const handleTabChange = (tabName) => {
+        setActiveTab(tabName);
     };
 
     const handleGuest = () => {
@@ -19,18 +18,27 @@ function HomePage() {
 
     return (
         <div>
-            <div className="welcome-container">
-                <button className="button" onClick={handleRegister}>Register</button>
-            </div>
-            <div className="welcome-container">
-                <button className="button" onClick={handleLogin}>Login</button>
-            </div>
-            <div className="welcome-container">
-                <button className="button" onClick={handleGuest}>Continue as Guest</button>
+            <div className="auth-box">
+                <div className="tab-container">
+                    <button 
+                        className={`tab-button ${activeTab === 'login' ? 'active' : ''}`} 
+                        onClick={() => handleTabChange('login')}
+                    >
+                        Sign In
+                    </button>
+                    <button 
+                        className={`tab-button ${activeTab === 'register' ? 'active' : ''}`} 
+                        onClick={() => handleTabChange('register')}
+                    >
+                        Sign Up
+                    </button>
+                </div>
+                {activeTab === 'login' && <LoginPage />}
+                {activeTab === 'register' && <RegisterPage />}
+                <a onClick={handleGuest} className="guest-link">Continue as Guest</a>
             </div>
         </div>
     );
-    
 }
 
 export default HomePage;

@@ -47,8 +47,8 @@ function RegisterPage() {
             <form onSubmit={handleSubmit}>
                 <input type="text" placeholder="First Name" value={fname} onChange={(e) => setFname(e.target.value)}/>
                 <input type="text" placeholder="Last Name" value={lname} onChange={(e) => setLname(e.target.value)}/>
-                <input type="text" placeholder="Major" value={major} onChange={(e) => setMajor(e.target.value)}/>
                 <input type="email" placeholder="USC Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                <input type="text" placeholder="Major" value={major} onChange={(e) => setMajor(e.target.value)}/>
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Register</button>
             </form>

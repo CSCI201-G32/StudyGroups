@@ -12,14 +12,15 @@ import AccountPage from './features/ProfileManagement/Account';
 function App() {
   return (
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage/>} />
         <Route path="/home" element={<AllStudyGroups />} />
         <Route path="/create" element={<CreateStudyGroupPage />} />
         <Route path="/:groupName/view" element={<FullStudyPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/guest" element={<GuestPage />} />
+        <Route path="/guest" element={<GuestPage/>} />
         <Route path="/account" element={<AccountPage />} />
+        {/* <Route path="/chat" element={<chat />} /> */}
       </Routes>
   );
 }
