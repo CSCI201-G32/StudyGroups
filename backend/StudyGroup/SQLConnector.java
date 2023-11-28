@@ -21,6 +21,49 @@ public class SQLConnector {
 		return conn;
 	}
 	
+	public static int addUserToStudyGroup(String userIDnum, StudyGroup sg) throws SQLException {
+
+		// Finds the study group based on its name
+		String query = "SELECT sg.* FROM StudyGroups sg WHERE sg.group_name = ?";
+		int studyGroupID = -1;
+		try {
+			Connection connection = connect();
+			PreparedStatement preparedStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStatement.setString(1, sg.getGroupName());
+			preparedStatement.executeUpdate();
+
+	        // Retrieve the generated key (study group ID)
+	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        if (resultSet.next()) {
+	            studyGroupID = resultSet.getInt(1);
+	        }
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return -1;
+		}
+	    query = "INSERT INTO StudyGroupUsers (group_ID, user_id) VALUES (?, ?)";
+	    try {
+	        Connection conn = connect();
+	        PreparedStatement preparedStatement = conn.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+	        preparedStatement.setInt(1, studyGroupID);
+	        preparedStatement.setString(2, userIDnum);
+
+	        preparedStatement.executeUpdate();
+
+	        // Retrieve the generated keys (user ID)
+	        ResultSet resultSet = preparedStatement.getGeneratedKeys();
+	        int userID = -1;
+	        if (resultSet.next()) {
+	            userID = resultSet.getInt("user_id");
+	        }
+
+	        return userID;
+	    } catch (SQLException e) {
+	        System.out.println(e.getMessage());
+	        return -1; // Indicates failure
+	    }
+	}
+	
 	public static int insertStudyGroup(StudyGroup sg) throws SQLException {
 		System.out.println(sg.getGroupName());
 		System.out.println(sg.getLocation());
