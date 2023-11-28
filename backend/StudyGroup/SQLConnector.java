@@ -261,7 +261,7 @@ public class SQLConnector {
 		// Checks if courses is filtered for by the user
 		if (sg.getCourses() != null && sg.getCourses().size() > 0) {
 			for (int i = 0; i < sg.getCourses().size(); i++) {
-				String query3 = "EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName = ? AND sg.group_id = sgs.group_id)";
+				String query3 = "EXISTS( SELECT 1 FROM studygroups.studygroups sg JOIN studygroups.studygroupcourses sc ON sg.group_id = sc.group_id JOIN studygroups.Courses c ON sc.course_id = c.CourseID WHERE c.CourseName LIKE ? AND sg.group_id = sgs.group_id)";
 				if (numparams == 0 && i == 0) {
 					query3 = whereString + query3;
 				} else {
@@ -309,7 +309,7 @@ public class SQLConnector {
 		      
 		      if (coursesFilter) {
 		    	  for (int i = 0; i < sg.getCourses().size(); i++) {
-		    		  preparedStatement.setString(coursesPosition, sg.getCourses().get(i));
+		    		  preparedStatement.setString(coursesPosition, sg.getCourses().get(i)+"%");
 		    		  coursesPosition++;
 		    	  }
 		      }
