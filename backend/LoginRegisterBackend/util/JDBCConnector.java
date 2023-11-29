@@ -126,7 +126,7 @@ public class JDBCConnector {
 		
 	}
 	
-	public static List<String> getUserAccount(String email) throws ClassNotFoundException{
+	public static List<String> getUserAccount(String userId) throws ClassNotFoundException{
 		Connection conn = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
@@ -134,15 +134,16 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Simi@0923");
 			
-			st = conn.prepareStatement("SELECT * FROM Users WHERE studentEmail = ?");
-			st.setString(1,  email);
+			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
+			st.setString(1,  userId);
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
 				String first = rs.getString("fname");
 				String last = rs.getString("lname");
+                		String email = rs.getString("studentEmail");
 				String major = rs.getString("studentMajor");
 				result.add(first);
 				result.add(last);
