@@ -5,6 +5,7 @@ import '../../../assets/study-group/AllStudyGroups.css';
 import StudyGroupWidget from '../components/StudyGroupWidget';
 import debounce from 'lodash.debounce';
 import CourseList from '../components/CourseList';
+import { getCookie } from '../../../utils/utils';
 
 const AllStudyGroups = () => {
     const [searchTerm,
@@ -28,6 +29,13 @@ const AllStudyGroups = () => {
     const [queryResults,
         setQueryResults] = useState([]);
     const navigate = useNavigate();
+
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    useEffect(() => {
+        const cookie = getCookie("UserID");
+        setIsLoggedIn(cookie > 0);
+    }, []);
 
     const handleSearchChange = (event) => {
         const newValue = event
@@ -171,7 +179,11 @@ const AllStudyGroups = () => {
             </div>
             <div className="info">
                 <div className="search-bar">
-                    <button onClick={handleCreateClick}>Create Group</button>
+                    <button onClick={handleCreateClick} style={{
+      display: isLoggedIn
+          ? 'block'
+          : 'none'
+  }}>Create Group</button>
                     <input
                         type="text"
                         value={searchTerm}
@@ -186,7 +198,8 @@ const AllStudyGroups = () => {
                             courses={group.courses}
                             meetingTimes={group.meetingTimes}
                             location={group.location}
-                            privacy={group.privacy}/>))}
+                            privacy={group.privacy}
+                            users={group.users} />))}
                     </div>
                     <div className="filter-menu">
                         <h2>Filters</h2>
