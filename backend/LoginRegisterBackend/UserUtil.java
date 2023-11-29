@@ -22,54 +22,64 @@ import util.JDBCConnector;
 public class UserUtil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		PrintWriter out = response.getWriter();
-		
-		response.setContentType("text/plain");
-		StringBuffer inputString = new StringBuffer();
-		String line = null;
-		Integer userID;
-		
-		try {
-		    BufferedReader reader = request.getReader();
-		    while ((line = reader.readLine()) != null)
-		      inputString.append(line);
-		  } catch (Exception e) { }
-		
-		
-		userID = Integer.parseInt(inputString.toString());
-		
-		List<String> userinfoList = new ArrayList<String>();
-		try {
-			userinfoList = JDBCConnector.getUserInfo(userID);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		String firstName = userinfoList.get(0);
-		String lastName = userinfoList.get(1);
-		
-		/* Now send back the information to the frontend in JSON format like this.
-		{
-		 
-		    "firstName": "John",
-		    "lastName": "Doe"
-		}
-		*/
-		
-		 out.print("{\"firstName\":\"" + firstName + "\",\"lastName\":\"" + lastName + "\"}");
-		  
-		
-		//response.setStatus(HttpServletResponse.SC_OK);
-	    response.setHeader("Access-Control-Allow-Origin", "*");
-	    response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-	    response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
+        PrintWriter out = response.getWriter();
+        response.setContentType("application/json");
 
+        StringBuffer inputString = new StringBuffer();
+        String line = null;
+        List<Integer> userIDs = new ArrayList<>();
 
-        
-	}
+        try {
+            BufferedReader reader = request.getReader();
+            while ((line = reader.readLine()) != null) {
+                inputString.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String[] idStrings = inputString.toString().split(",");
+        for (String idString : idStrings) {
+            try {
+                userIDs.add(Integer.parseInt(idString.trim()));
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        List<String> userNames = new ArrayList<>();
+        for (Integer userID : userIDs) {
+            try {
+                List<String> userInfoList = JDBCConnector.getUserInfo(userID);
+                if (userInfoList.size() >= 2) {
+                    String firstName = userInfoList.get(0);
+                    String lastName = userInfoList.get(1);
+                    userNames.add(firstName + " " + lastName);
+                }
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+
+        StringBuilder jsonResponse = new StringBuilder();
+        jsonResponse.append("[");
+        for (int i = 0; i < userNames.size(); i++) {
+            jsonResponse.append("\"" + userNames.get(i) + "\"");
+            if (i < userNames.size() - 1) {
+                jsonResponse.append(",");
+            }
+        }
+        jsonResponse.append("]");
+
+        out.print(jsonResponse.toString());
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+    }
 	
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//response.setStatus(HttpServletResponse.SC_OK);
