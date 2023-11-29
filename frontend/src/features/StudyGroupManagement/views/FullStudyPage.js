@@ -138,7 +138,7 @@ const FullStudyPage = () => {
                 //userList.push(userData);
                 setUserList([
                     ...userList,
-                    userData
+                    ...userData
                 ]);
             }).catch(error => {
                 console.error("Error fetching user data:", error);
@@ -169,19 +169,7 @@ const FullStudyPage = () => {
                 <h2>Current Members</h2>
                 <ul>
                     {userList.map((user, index) => (
-                        <li key={index}>
-                            {user
-                                .firstName
-                                .charAt(0)
-                                .toUpperCase()}{user
-                                .firstName
-                                .slice(1)}{" "} {user
-                                .lastName
-                                .charAt(0)
-                                .toUpperCase()}{user
-                                .lastName
-                                .slice(1)}
-                        </li>
+                        <li key={index}>{user}</li>
                     ))}
                 </ul>
                 <button
