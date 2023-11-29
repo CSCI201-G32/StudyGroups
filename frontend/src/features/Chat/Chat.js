@@ -6,7 +6,6 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import getCookie from "./Cookie";
 
 function Chat() {
-
   const[username, setUsername] = useState([]);
   const[messages, setMessages] = useState([])
   const[message, setMessage] = useState([]);
@@ -67,7 +66,12 @@ function Chat() {
   useEffect(() => {
     const fetchUsername = async () => {
       try {
-        const user = await getUsername();
+        let user = await getUsername();
+
+        if(user === null) {
+          user = "Anonymous";
+        }
+
         setUsername(user);
       } catch (error) {
         console.error('Error fetching username:', error);
@@ -76,8 +80,8 @@ function Chat() {
     };
   
     fetchUsername();
-  }, []);
 
+  }, []);
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -150,16 +154,16 @@ function Chat() {
 
   return (
     <div className="container">
+      <div className="title">
+        <h1 className="title">Chat</h1>
+      </div>
       <div className="chat-container">
-        <div>
-          <h1 className="title">Lounge</h1>
-        </div>
         <div className="messages">
           <div className="messages-content">
             {messages.map((message, index) => (
               <div key={index} className="message-item">
-                <strong>{message.username}: </strong>
-                <span>{message.message}</span>
+                <strong className="username">{message.username}: </strong>
+                <span className="text">{message.message}</span>
               </div>
             ))}
           </div>
