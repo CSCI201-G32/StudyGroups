@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +13,14 @@ import com.google.gson.JsonObject;
 
 import util.JDBCConnector;
 
-
+@WebServlet("/AccountServlet")
 public class AccountServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
+	
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        	doPost(request, response);
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 			
@@ -23,11 +28,11 @@ public class AccountServlet extends HttpServlet{
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		
-		String username = request.getParameter("username");
+		String userId = request.getParameter("userId");
 		
 		Gson gson = new Gson();
 		
-		if(username == null || username.isBlank()) {
+		if(userId == null || userId.isBlank()) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 			String error = "User information is missing";
 			pw.write(gson.toJson(error));
@@ -36,7 +41,7 @@ public class AccountServlet extends HttpServlet{
 		else {
 			List<String> info = new ArrayList<String>();
 			try {
-				info = JDBCConnector.getUserAccount(username);
+				info = JDBCConnector.getUserAccount(userId);
 			}
 			catch(ClassNotFoundException e) {
 				System.out.println(e.getMessage());
@@ -56,13 +61,14 @@ public class AccountServlet extends HttpServlet{
 				json.addProperty("Email", info.get(2));
 				json.addProperty("Major", info.get(3));
 				
-				String string = json.toString();
-				pw.write(gson.toJson(string));
+				pw.write(json.toString());
 				pw.flush();
 			}
 		}
 			
-			
+		
+		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 	}
 	
 	
