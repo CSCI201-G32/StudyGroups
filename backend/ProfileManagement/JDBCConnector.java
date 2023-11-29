@@ -7,16 +7,16 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/Yelp?user=root&password=Simi@0923");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Simi@0923");
 			
-			st = conn.prepareStatement("SELECT * FROM Users WHERE UserID = ?");
+			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
 			st.setString(1,  userId);
 			rs = st.executeQuery();
 			
 			while(rs.next()) {
 				String first = rs.getString("fname");
 				String last = rs.getString("lname");
-                String email = rs.getString("studentEmail");
+                		String email = rs.getString("studentEmail");
 				String major = rs.getString("studentMajor");
 				result.add(first);
 				result.add(last);
