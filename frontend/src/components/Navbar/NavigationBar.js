@@ -13,7 +13,7 @@ function NavigationBar() {
     useEffect(() => {
         // Check if the user is logged in
         const cookie = getCookie("UserID");
-        setIsLoggedIn(cookie < 0);
+        setIsLoggedIn(cookie > 0);
     }, []);
 
     const handleNavigation = (path) => {
@@ -25,7 +25,7 @@ function NavigationBar() {
             <div className='navigation-bar'>
                 <h1>StudyManager</h1>
                 <div className="icons-container">
-                {!isLoggedIn ? (
+                {isLoggedIn ? (
                     <>
                         <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
                         <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('/chat')} /> 
@@ -35,7 +35,6 @@ function NavigationBar() {
                     </>
                 ) : (
                     <>
-                        <FontAwesomeIcon icon={faHome} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
                         <FontAwesomeIcon icon={faUsers} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/home')} />
                         <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
                     </>

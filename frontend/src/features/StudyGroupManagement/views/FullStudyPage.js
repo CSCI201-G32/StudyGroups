@@ -8,6 +8,8 @@ const FullStudyPage = () => {
     const {groupName} = useParams();
     const [groupInfo,
         setGroupInfo] = useState(null);
+    const [userList,
+        setUserList] = useState([]); // Initialize userList as an empty array
 
     const currentUser = getCookie("UserID");
 
@@ -26,6 +28,28 @@ const FullStudyPage = () => {
                     }
                 });
             }
+        });
+    }
+
+    function getUsers() {
+        const url = "http://localhost:8080/StudyGroupsFinalProj_v2/UserUtil";
+        console.log(groupInfo.users);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: groupInfo.users
+        };
+
+        return fetch(url, options) // Add the "return" statement here
+            .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        }).catch(error => {
+            throw error; // Rethrow the error to propagate it
         });
     }
 
@@ -106,6 +130,22 @@ const FullStudyPage = () => {
 
     }, [groupName]);
 
+    useEffect(() => {
+        // Run this effect when groupInfo is updated
+        if (groupInfo) {
+            getUsers().then(userData => {
+                console.log("User data:", userData);
+                //userList.push(userData);
+                setUserList([
+                    ...userList,
+                    userData
+                ]);
+            }).catch(error => {
+                console.error("Error fetching user data:", error);
+            });
+        }
+    }, [groupInfo]);
+
     if (!groupInfo) {
         return <div>Ensure your group exists... Loading....</div>;
     }
@@ -128,17 +168,29 @@ const FullStudyPage = () => {
             <div className="sidebar">
                 <h2>Current Members</h2>
                 <ul>
-                    {groupInfo
-                        .users
-                        .map((user, index) => (
-                            <li key={index}>{user}</li>
-                        ))}
+                    {userList.map((user, index) => (
+                        <li key={index}>
+                            {user
+                                .firstName
+                                .charAt(0)
+                                .toUpperCase()}{user
+                                .firstName
+                                .slice(1)}{" "} {user
+                                .lastName
+                                .charAt(0)
+                                .toUpperCase()}{user
+                                .lastName
+                                .slice(1)}
+                        </li>
+                    ))}
                 </ul>
                 <button
                     className="join"
                     onClick={handleJoin}
                     style={{
-                    display: groupInfo.users.includes(parseInt(currentUser, 10))
+                    display: groupInfo
+                        .users
+                        .includes(parseInt(currentUser, 10))
                         ? 'none'
                         : 'block'
                 }}>Join</button>

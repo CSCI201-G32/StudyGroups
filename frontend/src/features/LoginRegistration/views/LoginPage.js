@@ -46,7 +46,7 @@ function LoginPage() {
         <div className="login-container">
         <h2>Login</h2>
             <form onSubmit={handleSubmit}>
-                <input type="text" placeholder="Username" value={username} onChange={(e) => setUsername(e.target.value)}/>
+                <input type="text" placeholder="Email" value={username} onChange={(e) => setUsername(e.target.value)}/>
                 <input type="password" placeholder="Password" value={password}
                     onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Login</button>
