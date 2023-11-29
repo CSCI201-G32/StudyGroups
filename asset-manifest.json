@@ -1,24 +1,15 @@
 {
   "files": {
-    "main.css": "/StudyGroups/static/css/main.9a31c938.chunk.css",
-    "main.js": "/StudyGroups/static/js/main.22ef03cc.chunk.js",
-    "main.js.map": "/StudyGroups/static/js/main.22ef03cc.chunk.js.map",
-    "runtime-main.js": "/StudyGroups/static/js/runtime-main.049959c3.js",
-    "runtime-main.js.map": "/StudyGroups/static/js/runtime-main.049959c3.js.map",
-    "static/js/2.54b74039.chunk.js": "/StudyGroups/static/js/2.54b74039.chunk.js",
-    "static/js/2.54b74039.chunk.js.map": "/StudyGroups/static/js/2.54b74039.chunk.js.map",
-    "static/js/3.2719c492.chunk.js": "/StudyGroups/static/js/3.2719c492.chunk.js",
-    "static/js/3.2719c492.chunk.js.map": "/StudyGroups/static/js/3.2719c492.chunk.js.map",
+    "main.css": "/StudyGroups/static/css/main.94e54430.css",
+    "main.js": "/StudyGroups/static/js/main.2e145088.js",
+    "static/js/787.9e9f4ffd.chunk.js": "/StudyGroups/static/js/787.9e9f4ffd.chunk.js",
     "index.html": "/StudyGroups/index.html",
-    "precache-manifest.94e851ae72398391d47ebc1e0ed69c89.js": "/StudyGroups/precache-manifest.94e851ae72398391d47ebc1e0ed69c89.js",
-    "service-worker.js": "/StudyGroups/service-worker.js",
-    "static/css/main.9a31c938.chunk.css.map": "/StudyGroups/static/css/main.9a31c938.chunk.css.map",
-    "static/js/2.54b74039.chunk.js.LICENSE.txt": "/StudyGroups/static/js/2.54b74039.chunk.js.LICENSE.txt"
+    "main.94e54430.css.map": "/StudyGroups/static/css/main.94e54430.css.map",
+    "main.2e145088.js.map": "/StudyGroups/static/js/main.2e145088.js.map",
+    "787.9e9f4ffd.chunk.js.map": "/StudyGroups/static/js/787.9e9f4ffd.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.049959c3.js",
-    "static/js/2.54b74039.chunk.js",
-    "static/css/main.9a31c938.chunk.css",
-    "static/js/main.22ef03cc.chunk.js"
+    "static/css/main.94e54430.css",
+    "static/js/main.2e145088.js"
   ]
 }
