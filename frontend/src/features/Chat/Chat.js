@@ -3,7 +3,7 @@ import '../../assets/chat/Chat.css';
 import {useEffect, useState, useRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import getCookie from "./Cookie";
+import { getCookie } from '../../utils/utils';
 
 function Chat() {
   const[username, setUsername] = useState([]);
@@ -93,7 +93,7 @@ function Chat() {
     }
     else {
       //Adding a new message to the database
-      await fetch('http://localhost:8080/Messages/StoreMessage', {
+      await fetch('http://localhost:8080/StudyGroups/StoreMessage', {
         mode: 'no-cors',
         method: 'POST',
         headers: {

@@ -18,7 +18,7 @@ function RegisterPage() {
 
         try {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/StudyGroupsFinalProj_v2/Register', true);
+            xhr.open('POST', 'http://localhost:8080/StudyGroups/Register', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
         
             xhr.onreadystatechange = function() {

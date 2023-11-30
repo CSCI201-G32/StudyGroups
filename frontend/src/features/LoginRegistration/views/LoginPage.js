@@ -14,7 +14,7 @@ function LoginPage() {
 
         try {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/StudyGroupsFinalProj_v2/Login', true);
+            xhr.open('POST', 'http://localhost:8080/StudyGroups/Login', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
         
             xhr.onreadystatechange = function() {
