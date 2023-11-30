@@ -3,18 +3,12 @@ import '../../assets/NavigationBar.css';
 import { useNavigate } from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faHome, faUsers, faUserCircle, faSignOutAlt, faComment, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { getCookie } from '../../utils/utils';
-
+import { useContext } from 'react';
+import { AuthContext } from '../../utils/AuthContext';
 
 function NavigationBar() {
     const navigate = useNavigate();
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-    useEffect(() => {
-        // Check if the user is logged in
-        const cookie = getCookie("UserID");
-        setIsLoggedIn(cookie > 0);
-    }, []);
+    const { isLoggedIn } = useContext(AuthContext);
 
     const handleNavigation = (path) => {
         navigate(path);

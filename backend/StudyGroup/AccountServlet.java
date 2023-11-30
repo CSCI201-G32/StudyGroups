@@ -1,9 +1,26 @@
+package StudyGroup;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+import util.JDBCConnector;
+
 @WebServlet("/AccountServlet")
 public class AccountServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	
-	protected void service(HttpServletRequest request, HttpServletResponse   response) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         	doPost(request, response);
 	}
 
@@ -52,7 +69,7 @@ public class AccountServlet extends HttpServlet{
 		}
 			
 		
-		response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		response.setHeader("Access-Control-Allow-Origin", "*");
 		response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 	}
 	

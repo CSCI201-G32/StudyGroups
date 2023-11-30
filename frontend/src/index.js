@@ -5,12 +5,15 @@ import App from './App';
 import reportWebVitals from './utils/reportWebVitals';
 import { HashRouter as Router } from "react-router-dom";
 import NavigationBar from './components/Navbar/NavigationBar';
+import { AuthProvider } from './utils/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
-      <NavigationBar />
-      <App />
+      <AuthProvider>
+        <NavigationBar />
+         <App />
+      </AuthProvider>
     </Router>
 );
 // If you want to start measuring performance in your app, pass a function

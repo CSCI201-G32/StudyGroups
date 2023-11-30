@@ -2,8 +2,12 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../../../assets/login/LoginPage.css';
+import { useContext } from 'react';
+import { AuthContext } from '../../../utils/AuthContext';
 
 function LoginPage() {
+
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
@@ -14,17 +18,17 @@ function LoginPage() {
 
         try {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://localhost:8080/StudyGroupsFinalProj_v2/Login', true);
+            xhr.open('POST', 'http://localhost:8080/StudyGroups/Login', true);
             xhr.setRequestHeader('Content-Type', 'application/json');
         
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
                         const response = JSON.parse(xhr.responseText);
-        
-                        if (response !== "-1") {
-                            console.log('Registration successful. UserID:', response);
-                            document.cookie = "UserID=" + response;
+                        document.cookie = "UserID=" + response;
+                        if (response !== -1) {
+                            console.log('Login successful. UserID:', response);
+                            setIsLoggedIn(true);
                             navigate('/home');
                         } else {
                             console.error('Registration failed');

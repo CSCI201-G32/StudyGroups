@@ -18,7 +18,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=root");
 			st = connection.prepareStatement("SELECT * FROM StudentInfo WHERE studentEmail = ? AND password = ?");
 			st.setString(1, username);
             st.setString(2, password);
@@ -65,7 +65,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			connection = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=root");
 			
 			//first check if the user already exists in the DB
 			st1 = connection.prepareStatement("SELECT * FROM StudentInfo WHERE studentEmail = ?");
@@ -134,7 +134,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=root");
 			
 			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
 			st.setString(1,  userId);
@@ -182,7 +182,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=root");
 			
 			st = conn.prepareStatement("SELECT UserID FROM Users WHERE studentEmail = ?");
 			st.setString(1,  email);
@@ -224,7 +224,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=root");
 			
 			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
 			st.setInt(1,  ID);

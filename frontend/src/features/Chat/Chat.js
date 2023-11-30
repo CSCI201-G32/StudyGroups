@@ -3,13 +3,16 @@ import '../../assets/chat/Chat.css';
 import {useEffect, useState, useRef} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import getCookie from "./Cookie";
+
+import {useNavigate} from 'react-router-dom';
+import { getCookie } from '../../utils/utils';
 
 function Chat() {
   const[username, setUsername] = useState([]);
   const[messages, setMessages] = useState([])
   const[message, setMessage] = useState([]);
   const messagesEndRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect( () => {
 
@@ -61,6 +64,15 @@ function Chat() {
     }
   };
 
+  useEffect(() => {
+        
+    if(getCookie("UserID") < 1){
+        alert("Login or Register to Chat!")
+        navigate("/");
+    }
+
+}, []);
+
   //Get the username (first part of the email) 
   //of the user associated with the current UserID
   useEffect(() => {
@@ -93,7 +105,7 @@ function Chat() {
     }
     else {
       //Adding a new message to the database
-      await fetch('http://localhost:8080/Messages/StoreMessage', {
+      await fetch('http://localhost:8080/StudyGroups/StoreMessage', {
         mode: 'no-cors',
         method: 'POST',
         headers: {

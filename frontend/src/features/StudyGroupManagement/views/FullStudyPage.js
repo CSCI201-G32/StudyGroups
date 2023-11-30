@@ -4,7 +4,6 @@ import '../../../assets/study-group/FullStudyPage.css';
 import CourseList from '../components/CourseList';
 import {getCookie} from '../../../utils/utils';
 import {useNavigate} from 'react-router-dom';
-import {update} from 'lodash';
 
 const FullStudyPage = () => {
     const {groupName} = useParams();
@@ -69,7 +68,7 @@ const FullStudyPage = () => {
     }
 
     function getUsers() {
-        const url = "http://localhost:8080/StudyGroupsFinalProj_v2/UserUtil";
+        const url = "http://localhost:8080/StudyGroups/UserUtil";
         console.log(groupInfo.users);
         const options = {
             method: 'POST',
@@ -107,7 +106,7 @@ const FullStudyPage = () => {
             }
         };
 
-        var url = "http://localhost:8080/ProjectTest/StudyGroupCreateServlet";
+        var url = "http://localhost:8080/StudyGroups/StudyGroupCreateServlet";
 
         var formData = new URLSearchParams();
         formData.append("groupName", groupInfo.groupName);
@@ -137,7 +136,7 @@ const FullStudyPage = () => {
             }
         };
 
-        var url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
+        var url = "http://localhost:8080/StudyGroups/StudyGroupReturnServlet";
 
         var formData = new URLSearchParams();
         formData.append("groupName", groupName);

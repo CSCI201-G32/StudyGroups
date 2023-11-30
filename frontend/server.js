@@ -21,7 +21,7 @@ app.use(
 
 app.use(express.json());
 
-const port = 8080;
+const port = 8000;
 
 app.listen(port);
 
@@ -44,7 +44,7 @@ app.post("/api/messages", async (req, res) => {
 app.get("/servlet/oldmessages", async (req, res) => {
   try {
     const response = await fetch(
-      "http://localhost:8080/Messages/DisplayMessages",
+      "http://localhost:8080/StudyGroups/DisplayMessages",
       {
         method: "GET",
         headers: { "Content-Type": "application/json" },
@@ -66,7 +66,7 @@ app.get("/servlet/oldmessages", async (req, res) => {
 
 app.post("/servlet/getuser", async (req, res) => {
   try {
-    const response = await fetch("http://localhost:8080/Messages/GetUser", {
+    const response = await fetch("http://localhost:8080/StudyGroups/GetUser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

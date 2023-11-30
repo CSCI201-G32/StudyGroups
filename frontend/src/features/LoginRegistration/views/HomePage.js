@@ -13,7 +13,7 @@ function HomePage() {
     };
 
     const handleGuest = () => {
-        navigate('/guest');
+        navigate('/home');
     };
 
     return (

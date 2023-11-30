@@ -114,7 +114,7 @@ const AllStudyGroups = () => {
         selectedDays,
         privacy
     }, callback) {
-        const url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
+        const url = "http://localhost:8080/StudyGroups/StudyGroupReturnServlet";
 
         const formData = new URLSearchParams();
 

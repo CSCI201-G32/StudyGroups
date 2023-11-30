@@ -43,7 +43,7 @@ const StudyGroupForm = ({
             }
         };
 
-        var url = "http://localhost:8080/ProjectTest/StudyGroupReturnServlet";
+        var url = "http://localhost:8080/StudyGroups/StudyGroupReturnServlet";
 
         var formData = new URLSearchParams();
         formData.append("groupName", groupName);

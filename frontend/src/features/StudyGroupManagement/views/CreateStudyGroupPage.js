@@ -143,7 +143,7 @@ function sendDataToBackend(studyGroupData, onSuccess) {
         }
     };
 
-    var url = "http://localhost:8080/ProjectTest/StudyGroupCreateServlet";
+    var url = "http://localhost:8080/StudyGroups/StudyGroupCreateServlet";
 
     // Prepare URL-encoded data
     var formData = new URLSearchParams();
