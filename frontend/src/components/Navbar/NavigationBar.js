@@ -9,10 +9,17 @@ import { AuthContext } from '../../utils/AuthContext';
 function NavigationBar() {
     const navigate = useNavigate();
     const { isLoggedIn } = useContext(AuthContext);
+    const { setIsLoggedIn } = useContext(AuthContext);
 
     const handleNavigation = (path) => {
         navigate(path);
     };
+
+    const handleLogout = () => {
+        document.cookie = "UserID=-1";
+        setIsLoggedIn(false);
+        handleNavigation('/');
+    }
 
     return (
         <div>
@@ -25,7 +32,7 @@ function NavigationBar() {
                         <FontAwesomeIcon icon={faComment} style={{ fontSize: '40px', margin: '0 15x' }} onClick={() => handleNavigation('/chat')} /> 
                         <FontAwesomeIcon icon={faPlus} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/create')} />
                         <FontAwesomeIcon icon={faUserCircle} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/account')} />
-                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleNavigation('/')} />
+                        <FontAwesomeIcon icon={faSignOutAlt} style={{ fontSize: '40px', margin: '0 15px' }} onClick={() => handleLogout()} />
                     </>
                 ) : (
                     <>
