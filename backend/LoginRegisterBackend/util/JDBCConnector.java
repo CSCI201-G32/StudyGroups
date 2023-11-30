@@ -134,7 +134,7 @@ public class JDBCConnector {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Simi@0923");
+			conn = DriverManager.getConnection("jdbc:mysql://localhost/StudyGroups?user=root&password=Uarer00t?");
 			
 			st = conn.prepareStatement("SELECT * FROM StudentInfo WHERE UserID = ?");
 			st.setString(1,  userId);
