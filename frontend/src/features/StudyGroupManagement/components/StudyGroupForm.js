@@ -85,7 +85,7 @@ const StudyGroupForm = ({
     };
 
     return (
-        <form className=".study-group-form" onSubmit={handleSubmit}>
+        <form className="study-group-form" onSubmit={handleSubmit}>
             <input
                 type="text"
                 value={groupName}
