@@ -1,17 +1,14 @@
 import React from 'react';
 import DayTimeSelection from './DayTimeSelection';
 import '../../assets/study-group/DayTime.css'; 
+import MeetingTimes from '../../features/StudyGroupManagement/components/MeetingList'
 
-const DayTimeComp = ({ meetingTimes, onAddMeetingTime }) => {
+const DayTimeComp = ({ meetingTimes, onAddMeetingTime, onRemoveMeeting }) => {
   return (
     <div className="day-time-comp">
       <DayTimeSelection onAddSelection={onAddMeetingTime} />
 
-      <div style={{ display: meetingTimes.length === 0 ? 'none' : 'block' }}>
-        {meetingTimes.map((meetingTime, index) => (
-          <div key={index}>{`${meetingTime.day} at ${meetingTime.time}`}</div>
-        ))}
-      </div>
+      <MeetingTimes meetingTimes={meetingTimes} onRemoveMeetingTime={onRemoveMeeting}/>
     </div>
   );
 };

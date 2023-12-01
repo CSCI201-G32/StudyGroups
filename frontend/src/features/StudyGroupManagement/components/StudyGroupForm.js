@@ -1,6 +1,5 @@
 import React from 'react';
 import DayTimeComp from '../../../components/InputField/DayTimeComp';
-import '../../../assets/study-group/StudyGroup.css';
 import CourseList from './CourseList';
 
 
@@ -14,6 +13,7 @@ const StudyGroupForm = ({
     removeCourse,
     meetingTimes,
     onAddMeetingTime,
+    removeMeeting,
     location,
     onLocationChange,
     privacy,
@@ -104,7 +104,7 @@ const StudyGroupForm = ({
             </div>
             <CourseList courses={courses} onRemoveCourse={removeCourse}/>
 
-            <DayTimeComp meetingTimes={meetingTimes} onAddMeetingTime={onAddMeetingTime}/>
+            <DayTimeComp meetingTimes={meetingTimes} onAddMeetingTime={onAddMeetingTime} onRemoveMeeting={removeMeeting}/>
 
             <input
                 type="text"

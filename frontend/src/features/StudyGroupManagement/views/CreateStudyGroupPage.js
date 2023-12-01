@@ -3,6 +3,7 @@ import StudyGroupForm from '../components/StudyGroupForm';
 import {useNavigate} from 'react-router-dom';
 import { getCookie } from '../../../utils/utils';
 import { useEffect } from 'react';
+import '../../../assets/study-group/StudyGroup.css';
 
 const CreateStudyGroupPage = () => {
     const [groupName,
@@ -54,6 +55,11 @@ const CreateStudyGroupPage = () => {
     const handleRemoveCourse = (courseIndex) => {
         const newCourses = courses.filter((_, index) => index !== courseIndex);
         setCourses(newCourses);
+    };
+
+    const handleRemoveMeeting = (meetingIndex) => {
+        const newMeeting = meetingTimes.filter((_, index) => index !== meetingIndex);
+        setMeetingTimes(newMeeting);
     };
 
     const handleAddMeetingTime = (day, time) => {
@@ -109,8 +115,8 @@ const CreateStudyGroupPage = () => {
     }, []);
 
     return (
-        <div>
-            <h1>Create Study Group</h1>
+        <div className="create-container">
+            <h1>Create</h1>
             <StudyGroupForm
                 groupName={groupName}
                 onGroupNameChange={handleGroupNameChange}
@@ -121,6 +127,7 @@ const CreateStudyGroupPage = () => {
                 removeCourse={handleRemoveCourse}
                 meetingTimes={meetingTimes}
                 onAddMeetingTime={handleAddMeetingTime}
+                removeMeeting={handleRemoveMeeting}
                 location={location}
                 onLocationChange={handleLocation}
                 privacy={privacy}

@@ -165,10 +165,8 @@ function Chat() {
   };
 
   return (
-    <div className="container">
-      <div className="title">
-        <h1 className="title">Chat</h1>
-      </div>
+    <div className="big-chat-container">
+      <h1>Chat</h1>
       <div className="chat-container">
         <div className="messages">
           <div className="messages-content">

@@ -1,0 +1,15 @@
+div.meeting-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+    margin-top: 20px;
+}
+
+.meeting-item {
+    padding: 10px 15px;
+    background-color: #990000; 
+    color: #fff;
+    border-radius: 20px; 
+    text-align: center;
+    cursor: default;
+}

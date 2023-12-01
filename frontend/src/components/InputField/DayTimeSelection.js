@@ -19,7 +19,7 @@ const DayTimeSelection = ({ onAddSelection }) => {
     <div className="day-time-selection">
       <DaySelection day={day} setDay={setDay} />
       <TimeSelection time={time} setTime={setTime} />
-      <button type="button" onClick={handleAddMeetingTime}>Add Day & Time</button>
+      <button className="day-time-button" type="button" onClick={handleAddMeetingTime}>Add Day & Time</button>
     </div>
   );
 };

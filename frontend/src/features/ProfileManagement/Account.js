@@ -53,20 +53,8 @@ const AccountPage = () => {
     }, []);
 
     return (
-        <div>
-            <header>
-                <div>
-                    <h1>Account</h1>
-                </div>
-                <div>
-                    <Link to="/mainHomePage" className="fa fa-home"/>
-                    <Link to="/home" className="fa fa-users"/>
-                    <Link to="/search" className="fa fa-search"/>
-                    <Link to="/calendar" className="fa fa-calendar"/>
-                    <Link to="/account" className="fa fa-user-circle"/>
-                    <Link to="/" className="fa fa-sign-out"/>
-                </div>
-            </header>
+        <div className="account-container">
+          <h1>Account Info</h1>
             <div id="accountMsg">
                 {accountInfo
                     ? (

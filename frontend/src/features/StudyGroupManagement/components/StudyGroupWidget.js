@@ -56,7 +56,7 @@ const StudyGroupWidget = ({
             </div>
             <div className="icon-text-combo">
                 <div className="icon-text-combo" style={{
-                    display: !isPartOfGroup && isPrivate
+                    display: (!isPartOfGroup && isPrivate) || !isLoggedIn
                         ? 'none'
                         : ''
                 }}>

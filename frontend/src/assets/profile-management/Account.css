@@ -1,8 +1,15 @@
 .results {
     padding: 10px;
     font-size: 20px;
-    margin-left: 45px;
-    margin-right: 45px;
+    margin: 45px;
     align-items: center;
     text-align: center;
 }
+
+.account-container{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+

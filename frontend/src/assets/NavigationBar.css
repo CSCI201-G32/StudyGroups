@@ -1,5 +1,6 @@
 h1 {
     padding:30px;
+    border-radius: 5px;
     margin: 3px;
     display: flex;
     justify-content: space-between;
@@ -16,7 +17,6 @@ h1 {
     background-color: #990000;
     color: #FFCC00;
     padding: 10px;
-    margin: 3px;
 }
 
 .icons-container {

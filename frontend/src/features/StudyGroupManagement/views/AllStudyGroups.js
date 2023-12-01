@@ -93,6 +93,7 @@ const AllStudyGroups = () => {
             console.log("Fetched data:", data);
 
             if (data && typeof data === 'object' && !Array.isArray(data)) {
+                console.log(data);
                 setQueryResults([data]);
             } else {
                 setQueryResults(data);

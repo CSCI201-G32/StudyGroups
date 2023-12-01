@@ -36,7 +36,7 @@ h1 {
 }
 
 .course-list,
-.time-list {
+.meeting-list {
     background-color: #fff;
     border: 1px solid #990000; /* USC Cardinal */
     border-radius: 4px;
@@ -44,7 +44,8 @@ h1 {
     margin-bottom: 10px;
 }
 
-.course-item {
+.course-item,
+.meeting-item {
     display: inline-block;
     background-color: #990000; /* USC Cardinal */
     color: #fff;
