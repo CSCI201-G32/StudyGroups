@@ -13,6 +13,7 @@ function HomePage() {
     };
 
     const handleGuest = () => {
+        document.cookie = "userID=-1";
         navigate('/home');
     };
 
@@ -32,10 +33,11 @@ function HomePage() {
                     >
                         Sign Up
                     </button>
+                    
                 </div>
-                {activeTab === 'login' && <LoginPage />}
-                {activeTab === 'register' && <RegisterPage />}
-                <a onClick={handleGuest} className="guest-link">Continue as Guest</a>
+                {activeTab === 'login' && <LoginPage handleGuest={handleGuest} />}
+                {activeTab === 'register' && <RegisterPage handleGuest={handleGuest}/>}
+                
             </div>
         </div>
     );

@@ -5,7 +5,7 @@ import '../../../assets/login/RegisterPage.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../../utils/AuthContext';
 
-function RegisterPage() {
+function RegisterPage(props) {
 
     const { setIsLoggedIn } = useContext(AuthContext);
 
@@ -61,6 +61,7 @@ function RegisterPage() {
                 <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Register</button>
             </form>
+            <a onClick={props.handleGuest} className="guest-link">Continue as Guest</a>
         </div>
     );
 }

@@ -5,7 +5,7 @@ import '../../../assets/login/LoginPage.css';
 import { useContext } from 'react';
 import { AuthContext } from '../../../utils/AuthContext';
 
-function LoginPage() {
+function LoginPage(props) {
 
     const { setIsLoggedIn } = useContext(AuthContext);
 
@@ -55,6 +55,7 @@ function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}/>
                 <button type="submit">Login</button>
             </form>
+            <a onClick={props.handleGuest} className="guest-link">Continue as Guest</a>
         </div>
     );
 

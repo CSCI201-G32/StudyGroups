@@ -21,8 +21,6 @@ body {
 
 .auth-box {
     text-align: center;
-    padding: 20px;
-    padding-bottom: 10px;
     border-radius: 10px;
 
     width: 400px; /* Width of the box */
@@ -53,12 +51,13 @@ body {
 /* Style for guest link at the bottom */
 .guest-link {
     position: absolute;
-    bottom: 30px; 
     color: #990000; 
     position: relative; 
     text-decoration: none;
+    
 }
 
 .guest-link:hover {
     text-decoration: underline;
+    cursor: pointer;
 }
