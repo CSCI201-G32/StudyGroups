@@ -31,7 +31,8 @@ function LoginPage(props) {
                             setIsLoggedIn(true);
                             navigate('/home');
                         } else {
-                            console.error('Registration failed');
+                            alert("Login failed! Email and/or password was incorrect.")
+                            console.error('Login failed');
                         }
                     } else {
                         console.error('Request failed:', xhr.status);
